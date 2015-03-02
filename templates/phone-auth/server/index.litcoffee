@@ -1,9 +1,9 @@
-Écrit
-=====
+<[name]>
+===
 
 Publishing for cool people.
 
-	Ecrit  = () ->
+	<[name]>  = () ->
 
 Here's where we require our [npm modules](https://npmjs.com). Everything specified in `package.json` is usually instantiated here.
 
@@ -130,8 +130,8 @@ Configure database.
 Start the server.
 
 			server.listen app.get("port"), () ->
-				console.log "#{"Écrit".magenta} #{__('version')} #{pkg.version.green} #{__('on')} #{ip.address()}:#{app.get('port').toString().red}"
+				console.log "#{"<[name]>".magenta} #{__('version')} #{pkg.version.green} #{__('on')} #{ip.address()}:#{app.get('port').toString().red}"
 
 		@
 
-	module.exports = Ecrit
+	module.exports = <[name]>

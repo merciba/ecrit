@@ -1,0 +1,21 @@
+doctype
+html
+  head
+    title #{title} - #{description}
+    link(rel='stylesheet', href='/css/style.css')
+    link(rel='stylesheet', href='//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css')
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js", type='application/javascript')
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/AniJS/0.9.1/anijs-min.js" type='application/javascript')
+    script(src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js" type='application/javascript')
+    if require
+      each module in require
+        script(src='/js/modules/#{module}.js', type='application/javascript')
+
+  body
+    header
+      h1 Header 
+    .container
+      block content
+      block nav
+    footer
+      p Footer
