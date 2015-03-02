@@ -1,0 +1,60 @@
+{
+  "data": {
+    "user": [],
+    "users": []
+  },
+  "schema": {
+    "user": {
+      "phone": {
+        "type": "string"
+      },
+      "token": {
+        "type": "string"
+      },
+      "first_name": {
+        "type": "string"
+      },
+      "last_name": {
+        "type": "string"
+      },
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    },
+    "users": {
+      "id": {
+        "type": "string",
+        "unique": true
+      },
+      "token": {
+        "type": "string",
+        "unique": true
+      },
+      "first_name": {
+        "type": "string"
+      },
+      "last_name": {
+        "type": "string"
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    }
+  },
+  "counters": {
+    "user": {},
+    "users": {}
+  }
+}
