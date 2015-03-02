@@ -2,9 +2,9 @@ Config
 ======
 
 	module.exports = {
-		sessionSecret : "<Your Session Secret>"
+		sessionSecret : "<[randomToken]>"
 
-		name: 'My Écrit Blog'
+		name: '<[name]>'
 
 		data: {
 
@@ -16,11 +16,11 @@ Config
 			connections: {
 				mongo: {
 					adapter: 'mongo'
-					host: 'localhost',
+					host: '<[mongo_host]>',
 					port: 27017,
-					user: '',
-					password: '',
-					database: 'ecrit'
+					user: '<[mongo_user]>',
+					password: '<[mongo_password]>',
+					database: '<[name]>'
 				}
 			}
 
@@ -30,14 +30,13 @@ Config
 		}
 
 		i18n: {
-			locales: ['en', 'fr']
+			locales: ['en']
 			language: 'en'
-			apiKey: '<Google Translate API Key>'
 		}
 
 		twilio: {
-			sid: '<Twilio SID>'
-			authToken: '<Twilio Auth Token>'
+			sid: '<[twilio_sid]>'
+			authToken: '<[twilio_auth_token]>'
 		}
 
 	}
