@@ -1,7 +1,7 @@
 Écrit
 =====
 
-# Publishing for cool people.
+Publishing for cool people.
 
 Dependencies (in order)
 ---------------------------
