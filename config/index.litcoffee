@@ -36,8 +36,8 @@ Config
 		}
 
 		twilio: {
-			sid: 'AC482fa83355e3815c932e68d69aa0104d'
-			authToken: '8477a92824ec55138749a590ef56d6fd'
+			sid: '<Twilio SID>'
+			authToken: '<Twilio Auth Token>'
 		}
 
 	}
