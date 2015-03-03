@@ -22,11 +22,6 @@ Models
 				defaultsTo: false
 			}
 
-			country: {
-				type: 'string'
-				required: true
-			}
-
 			token: {
 				type: 'string'
 				required: true

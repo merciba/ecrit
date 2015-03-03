@@ -9,12 +9,15 @@ The CLI interface for the Écrit publishing framework.
 	exec = require('exec')
 	prompt = require('prompt')
 	isEmpty = require 'empty-dir'
+	random = require 'random-token'
 	install = require './install'
 
 	prompt.message = 'Écrit'
-	
+	folder = if process.argv[3] then process.argv[3] else null
+
 	config = {
-		target: if process.argv[3] then path.join(process.cwd(), process.argv[3]) else process.cwd()
+		target: if folder then path.join(process.cwd(), folder) else process.cwd()
+		randomToken: random 16
 	}
 	targetExists = fs.exists config.target
 	targetEmpty = if targetExists then isEmpty.sync config.target else true
@@ -23,7 +26,7 @@ The CLI interface for the Écrit publishing framework.
 		console.log exitmsg if exitmsg
 		process.exit 0
 
-	done 'Error: Target exists and is not empty' if not targetEmpty
+	done 'Écrit: [Error: Target exists and is not empty]'.red if not targetEmpty
 
 	switch process.argv[2]
 		when 'create'
@@ -34,6 +37,7 @@ The CLI interface for the Écrit publishing framework.
 						type: 'string'
 						pattern: /^[A-Z]+$/i
 						message: 'Name must contain only the characters A-Z|a-z'
+						default: path.basename config.target
 						required: true
 					}
 					template: {
@@ -43,7 +47,7 @@ The CLI interface for the Écrit publishing framework.
 						message: 'Must enter a valid template name.'
 						default: 'standard'
 					}
-					mongo_url: {
+					mongo_host: {
 						description: 'MongoDB host'
 						type: 'string'
 						default: 'localhost'
@@ -63,7 +67,7 @@ The CLI interface for the Écrit publishing framework.
 					}
 				}
 			}, (err, result) ->
-				console.log err if err
+				done err.red if err
 				config[key] = value for key, value of result
 				switch config.template
 					when 'phone-auth'
@@ -85,7 +89,7 @@ The CLI interface for the Écrit publishing framework.
 								}
 							}
 						}, (err, result) ->
-							console.log err if err
+							done err.red if err
 							config[key] = value for key, value of result
 							install config, done
 					when 'standard'

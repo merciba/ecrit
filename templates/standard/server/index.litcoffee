@@ -1,9 +1,9 @@
-<[name]>
-===
+Écrit
+=====
 
 Publishing for cool people.
 
-	<[name]>  = () ->
+	Ecrit  = () ->
 
 Here's where we require our [npm modules](https://npmjs.com). Everything specified in `package.json` is usually instantiated here.
 
@@ -23,7 +23,7 @@ Here's where we require our [npm modules](https://npmjs.com). Everything specifi
 		Waterline		= require 'waterline'
 		browserify 		= require 'browserify-middleware'
 		i18n			= require 'i18n'
-		twilio 			= require 'twilio'
+		nodemailer 		= require 'nodemailer'
 
 Require local files as modules. Note the relative paths.
 
@@ -52,6 +52,7 @@ Configure i18n locales.
 Instantiate the global `app` object. `app` will contain the main [Express](http://expressjs.com/) server instance, as well as other properties we can add as we see fit. 
 
 		app	= express()
+		app.config = config
 
 Re-route console methods to app, so that we can control language translation and put a timestamp on output
 
@@ -89,12 +90,9 @@ Attach all to the Express instance.
 		app.use bodyParser.json()
 		app.use bodyParser.urlencoded { extended: true }
 
-Configure SMS functionality using [Twilio](http://twilio.com)
+Configure Mandrill for emails.
 
-		app.sms = twilio config.twilio.sid, config.twilio.authToken
-		app.sms.incomingPhoneNumbers.get (err, data) ->
-			app.error "Your app must have a Twilio phone number to provision for auth. Go to https://www.twilio.com/user/account/phone-numbers/incoming for more info." if err
-			app.phone_number = data.incoming_phone_numbers[0].phone_number
+		app.postman = nodemailer.createTransport config.mail
 
 Attach controllers.
 
@@ -130,8 +128,8 @@ Configure database.
 Start the server.
 
 			server.listen app.get("port"), () ->
-				console.log "#{"<[name]>".magenta} #{__('version')} #{pkg.version.green} #{__('on')} #{ip.address()}:#{app.get('port').toString().red}"
+				console.log "#{"Powered By Écrit".bgMagenta.black}: #{app.config.app_name.cyan} (#{__('version')} #{pkg.version.cyan}) #{__('on')} #{ip.address().blue}:#{app.get('port').toString().red}"
 
 		@
 
-	module.exports = <[name]>
+	module.exports = Ecrit

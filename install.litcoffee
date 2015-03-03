@@ -3,18 +3,28 @@ Install
 
 Installs a fresh Écrit project in the target directory.
 
-	gulp = require('gulp')
-	es = require('event-stream')
+	fs = require 'fs'
+	ncp = require('ncp').ncp
+	es = require 'event-stream'
 	mkdir = require 'mkdirp'
 
 	module.exports = (config, end) ->
 		console.log config
+
 		mkdir config.target, (err) ->
-			end err if err
-			console.log "Ready to install at #{config.target}"
-		###gulp.src("./templates/#{config.template}")
-		.pipe(gulp.dest(config.target)
-			.on('end', () ->
-				end()
-			))###
+			end err.red if err
+			console.log "Installing project #{config.name} at #{config.target}".magenta
+
+			options = {
+				transform: (read, write) ->
+					read = read.pipe(es.replace("<[#{key}]>", value)) for key, value of config
+					read.pipe(write)
+			}
+			
+			ncp "#{__dirname}/templates/#{config.template}/", config.target, options, (err) ->
+				end err.red if err
+				end "Done!".green
+
+			
+				
 

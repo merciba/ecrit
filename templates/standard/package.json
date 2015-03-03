@@ -1,7 +1,7 @@
 {
   "name": "<[name]>",
   "version": "1.0.0",
-  "description": "Publishing for cool people.",
+  "description": "An Écrit app",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -33,6 +33,7 @@
     "request": "^2.53.0",
     "sails-mongo": "^0.10.5",
     "twilio": "^1.11.1",
+    "validator": "3.32.0",
     "waterline": "^0.10.18"
   },
   "devDependencies": {

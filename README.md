@@ -1,5 +1,6 @@
-Écrit
+Écrit 
 =====
+([IPA](http://en.wiktionary.org/wiki/Appendix:French_pronunciation): /e.kʁi/)
 
 Publishing for cool people.
 

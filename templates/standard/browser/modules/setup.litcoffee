@@ -18,14 +18,14 @@
 		el: $('[data-module="setup"]')
 
 		events: {
-			'click #signup-btn': 'signup'
+			'click button': 'submit'
 		}
 
 		methods: {
-			signup: (e) ->
+			submit: (e) ->
 				e.preventDefault()
-				form = $(@).parent()
-				setup = $.post '/setup', form.serializeJSON()
+				form = $(@).parent('form')
+				setup = $.post form.attr('action'), form.serializeJSON()
 				setup.done (data) ->
 					console.log data
 					toastr.error data.error if data.error?

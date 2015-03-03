@@ -6,9 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "bin": {
-    "ecrit": "./bin/ecrit.js"
-  },
+  "bin": "./bin/ecrit.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/merciba/ecrit"
@@ -23,8 +21,9 @@
     "coffee-script": "^1.9.1",
     "event-stream": "^3.2.2",
     "exec": "^0.2.0",
-    "gulp": "^3.8.11",
     "mkdirp": "^0.5.0",
-    "prompt": "^0.2.14"
+    "ncp": "^2.0.0",
+    "prompt": "^0.2.14",
+    "random-token": "0.0.8"
   }
 }

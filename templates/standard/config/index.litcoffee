@@ -4,7 +4,9 @@ Config
 	module.exports = {
 		sessionSecret : "<[randomToken]>"
 
-		name: '<[name]>'
+		app_name: '<[name]>'
+		app_host: '<[host]>'
+		app_email: '<[email]>'
 
 		data: {
 
@@ -34,9 +36,12 @@ Config
 			language: 'en'
 		}
 
-		twilio: {
-			sid: '<[twilio_sid]>'
-			authToken: '<[twilio_auth_token]>'
+		mail: {
+			service: '<[email_service]>',
+			auth: {
+				user: '<[email]>',
+				pass: '<[email_password]>'
+			}
 		}
 
 	}

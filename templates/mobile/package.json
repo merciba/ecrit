@@ -1,7 +1,7 @@
 {
   "name": "<[name]>",
   "version": "1.0.0",
-  "description": "Publishing for cool people.",
+  "description": "An Écrit app",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
