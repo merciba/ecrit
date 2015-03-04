@@ -38,29 +38,38 @@ HTTP Get
 				}
 				]
 
+			'/verify/:token': [ app.controllers.auth.verify_token ]
+
 			'/:model': [(req, res) ->
 				if req.params.model.match /(admin|wp-admin|signin|login|home)/
 					res.redirect '/dashboard'
 				else
-					app.models[req.params.model].findOne { id: req.params.id }, (err, model) ->
+					query = { id: req.params.id }
+
+					app.models[req.params.model].findOne query, (err, model) ->
 						res.redirect '/404' if err
 						res.render req.params.model, model
 				]
 
 			'/:model/:id': [(req, res) ->
-				app.models[req.params.model].findOne { id: req.params.id }, (err, model) ->
+				query = { id: req.params.id }
+
+				app.models[req.params.model].findOne query, (err, model) ->
 					res.redirect '/404' if err
 					res.render req.params.model, model
 				]
 
 			'/api/:model': [(req, res) ->
+
 				app.models[req.params.model].find().exec (err, models) ->
 					return res.json { err: err }, 500 if err
 					res.json models
 				]
 
 			'/api/:model/:id': [(req, res) ->
-				app.models[req.params.model].findOne { id: req.params.id }, (err, model) ->
+				query = { id: req.params.id }
+
+				app.models[req.params.model].findOne query, (err, model) ->
 					return res.json { err: err }, 500 if err
 					res.json model
 				]

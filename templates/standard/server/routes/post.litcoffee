@@ -5,10 +5,14 @@ HTTP Post
 
 		return {
 
-			'/setup': [ app.controllers.auth.validate_new_email, app.controllers.auth.validate_new_password, app.controllers.auth.send_verify_email, app.controllers.users.create_admin ]
+			'/setup': [ app.controllers.auth.validate_new_user, app.controllers.home.configure_app_email, app.controllers.home.configure_app_sms, app.controllers.auth.send_verify_email, app.controllers.auth.send_verify_sms, app.controllers.users.create_user ]
 
 			'/api/:model': [(req, res, next) ->
-				app.models[req.params.model].create req.body, (err, model) ->
+				query = {}
+				for key, value of app.models[req.params.model].attributes 
+					query[key] = req.body[key] if req.body.hasOwnProperty key
+
+				app.models[req.params.model].create query, (err, model) ->
 					return res.json { error: err }, 500 if err
 					res.json model
 				]
