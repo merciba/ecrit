@@ -7,10 +7,10 @@ Middleware
 
 		return {
 
-			'/': [ app.controllers.home.beforeAll ]
+			'/': [ app.controllers.global.before_all ]
 
 			'/js': [ app.bundle "server/public/scripts" ]
 
-			'/api/*': [ app.controllers.auth.api ]
+			'/api/*': [ app.controllers.global.api ]
 
 		}

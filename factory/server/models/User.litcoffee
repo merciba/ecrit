@@ -41,28 +41,56 @@ User Model
 
 			token: {
 				type: 'string'
-				required: true
+				required: false
 				unique: true
+			}
+
+			phone_token: {
+				type: 'string'
+				required: false
+				unique: true
+			}
+
+			first_name: {
+				type: 'string'
+				required: true
+			}
+
+			last_name: {
+				type: 'string'
+				required: false
 			}
 
 			toJSON: () ->
 				obj = @toObject()
-				delete obj.token
 				delete obj.password
 				return obj
 
 			full_name: () ->
 				return "#{this.first_name} #{this.last_name}"
 
+			login: (password) ->
+				return bcrypt.compareSync password, @password
+
+			phoneLogin: (phone_token) ->
+				return (phone_token is @phone_token) 
+
 		}
 
 		beforeCreate: (user, next) ->
 			bcrypt.hash user.password, 10, (err, hash) ->
-				return next err if err
+				next err if err
 				user.password = hash
-				bcrypt.hash user.token, 10, (err, hash) ->
-					return next err if err
-					user.token = hash
-					next()
+				next()
+
+		beforeUpdate: (user, next) ->
+			if user.new_password?
+				bcrypt.genSalt 10, (err, salt) ->
+					next err if err
+					bcrypt.hash user.new_password, salt, (err, encrypted) ->
+						next err if err
+						delete user.new_password
+						user.password = encrypted
+						next()
 			
 	}

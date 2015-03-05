@@ -2,11 +2,9 @@ Config
 ======
 
 	module.exports = {
-		sessionSecret : "<[randomToken]>"
+		sessionSecret : Date()
 
-		app_name: '<[name]>'
-		app_host: '<[host]>'
-		app_email: '<[email]>'
+		app_id: '<[app_id]>'
 
 		data: {
 
@@ -22,25 +20,12 @@ Config
 					port: 27017,
 					user: '<[mongo_user]>',
 					password: '<[mongo_password]>',
-					database: '<[name]>'
+					database: '<[app_id]>'
 				}
 			}
 
 			defaults: {
 				migrate: 'alter'
-			}
-		}
-
-		i18n: {
-			locales: ['en']
-			language: 'en'
-		}
-
-		mail: {
-			service: '<[email_service]>',
-			auth: {
-				user: '<[email]>',
-				pass: '<[email_password]>'
 			}
 		}
 

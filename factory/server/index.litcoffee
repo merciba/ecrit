@@ -53,11 +53,6 @@ Instantiate the global `app` object. `app` will contain the main [Express](http:
 
 			app	= express()
 
-			app.models = dbModels.collections
-			app.connections = dbModels.connections
-			app.dialog "Database Connected"
-			app.data_config = data_config
-
 Re-route console methods to app, so that we can control language translation and put a timestamp on output
 
 			app.dialog = (str) -> console.log str.green
@@ -65,13 +60,18 @@ Re-route console methods to app, so that we can control language translation and
 			app.error = (str) -> throw new Error "#{moment().format('D MMM YYYY H:mm:ss').bgMagenta.black}: #{"Error:".red} #{str.red}"
 			app.warn = (str) -> console.warn "#{moment().format('D MMM YYYY H:mm:ss').bgMagenta.black}: #{"Warning:".yellow} #{str.yellow}"
 
+			app.models = dbModels.collections
+			app.connections = dbModels.connections
+			app.dialog "Database Connected"
+			app.data_config = data_config
+			app.isSetup = () -> return app.hasOwnProperty('config')
+
 Check for an installed app in the db
 
 			app.models.config.findOne { app_id: app.data_config.app_id }, (err, config) ->
 				app.error err if err
 
 				if config and Object.keys(config).length
-					app.isSetup = true
 					app.config = config
 
 Configure i18n locales.
@@ -82,12 +82,11 @@ Configure i18n locales.
 							defaultLocale: 'en'
 							directory: './config/i18n/locales'
 						}
-						__ = i18n.__
-						app.use i18n.init
+						app.__ = i18n.__
 
 Configure SMS functionality using [Twilio](http://twilio.com)
 
-					if config.app_twilio_sid and config.app_twilio_authKey
+					if config.app_twilio_sid and config.app_twilio_authToken
 						app.sms = twilio config.twilio.sid, config.twilio.authToken
 						app.sms.incomingPhoneNumbers.get (err, data) ->
 							app.error "Your app must have a Twilio phone number to provision for auth. Go to https://www.twilio.com/user/account/phone-numbers/incoming for more info." if err
@@ -95,8 +94,7 @@ Configure SMS functionality using [Twilio](http://twilio.com)
 				
 				else
 					app.dialog "First install, additional setup required"
-					app.isSetup = false
-					__ = (str) -> return str
+					app.__ = (str) -> return str
 
 Set the TCP/IP port for the app to listen on. During development it's set at `localhost:1234` 
 but it can be any number that isn't already used by any other system software (such as mongodb, which rests on `localhost:27017`).
@@ -147,7 +145,7 @@ Start the server.
 
 				server = require('http').createServer app
 				server.listen app.get("port"), () ->
-					console.log "#{"Powered By Écrit".bgMagenta.black}: id = #{app.data_config.app_id.cyan} (#{__('version')} #{pkg.version.cyan}) #{__('on')} #{ip.address().blue}:#{app.get('port').toString().red}"
+					console.log "#{"Powered By Écrit".bgMagenta.black}: #{app.config?.app_name || app.data_config.app_id.cyan} (#{app.__('version')} #{pkg.version.cyan}) #{app.__('on')} #{ip.address().blue}:#{app.get('port').toString().red}"
 
 		@
 

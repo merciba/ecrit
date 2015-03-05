@@ -29,14 +29,14 @@
     },
     el: $('[data-module="setup"]'),
     events: {
-      'click #signup-btn': 'signup'
+      'click button': 'submit'
     },
     methods: {
-      signup: function(e) {
+      submit: function(e) {
         var form, setup;
         e.preventDefault();
-        form = $(this).parent();
-        setup = $.post('/setup', form.serializeJSON());
+        form = $(this).parent('form');
+        setup = $.post(form.attr('action'), form.serializeJSON());
         return setup.done(function(data) {
           console.log(data);
           if (data.error != null) {

@@ -53,15 +53,27 @@ Config Model
 				required: false
 			}
 
-			app_twilio_authKey: {
+			app_twilio_authToken: {
 				type: 'string'
 				required: false
 			}
 
-			user_id_format {
+			app_auth_type: {
 				type: 'string'
-				in: ['email', 'phone']
-				defaultsTo: 'email' 
+				required: true
+				in: ['email', 'phone', 'two-factor']
+			}
+
+			signup_email_text: {
+				type: 'string'
+				required: false
+				defaultsTo: "Thanks for signing up to #{this.app_name}!"
+			}
+
+			signup_email_html: {
+				type: 'string'
+				required: false
+				defaultsTo: "<h1>Thanks for signing up to #{this.app_name}!</h1>"
 			}
 
 			toJSON: () ->
