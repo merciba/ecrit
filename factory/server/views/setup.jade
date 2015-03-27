@@ -1,25 +1,48 @@
 extend layout
+block nav
+	h2 Nav Goes Here
 block content
 	.container(data-module="setup" class="center full-height five-sixths")
-		h3 #{description}
+		h3 Page: #{description}
 
-		form(id="setup-form" action="/setup" class="center text-centered two-row one-fourth")
-			div(data-model="user")
-				input(name="id" type="text" placeholder="Your Email or Phone Number" class="required-field")
-				input(name="first_name" type="text" placeholder="Your First Name" class="required-field")
-				input(name="last_name" type="text" placeholder="Your Last Name")
-				input(name="password" type="password" class="required-field")
-				input(name="password_confirm" type="password" class="required-field")
-			div(data-model="config")
-				input(name="app_name" type="text" placeholder="Your App's Name" class="required-field")
-				input(name="app_email_service" type="text" class="hidden")
-				input(name="app_email" type="text" placeholder="Your App's Email Address" class="required-field")
-				input(name="app_email_password" type="text" placeholder="Your App's Email Password" class="required-field")
+		div(id="setup-form" action="/setup" class="center text-centered three-row two-thirds padded")
+
+			form(data-model="user" class="pull-left padded two-fifths")
+				label(for="id") Your Email or Phone Number
+				input(name="id" type="text" placeholder="Your Email or Phone Number" class="required-field margined full-width")
+				label(for="first_name") Your First Name
+				input(name="first_name" type="text" placeholder="Your First Name" class="required-field margined full-width")
+				label(for="last_name") Your Last Name
+				input(name="last_name" type="text" placeholder="Your Last Name" class="margined full-width")
+				label(for="password") Admin Password
+				input(name="password" type="password" class="required-field margined full-width" placeholder="Your Admin Password")
+				label(for="password_confirm") Confirm Admin Password
+				input(name="password_confirm" type="password" class="required-field margined full-width" placeholder="Confirm Admin Password")
+			
+			form(data-model="config" class="pull-right padded two-fifths")
+				label(for="app_name") Your App's Name
+				input(name="app_name" type="text" placeholder="Your App's Name" class="required-field margined full-width")
+				label(for="app_email") Your App's Email Address
+				input(name="app_email" type="text" placeholder="Your App's Email Address" class="required-field margined full-width")
+				label(for="app_email_service") Which email service does this email use?
+				select(name="app_email_service" class="margined full-width") 
+					option(value="None Selected" selected) Select an Email Service 
+					option(value="Gmail") Gmail
+					option(value="Hotmail") Hotmail
+					option(value="Yahoo") Yahoo
+					option(value="SendGrid") SendGrid
+					option(value="Mandrill") Mandrill
+					option(value="Mailgun") Mailgun
+					option(value="Postmark") Postmark
+
+				label(for="app_email_password") App Email Password
+				input(name="app_email_password" type="text" placeholder="Your App's Email Password" class="required-field margined full-width")
+
 				label(for="app_auth_type") How will you authenticate your users?
-				input(name="app_auth_type" type="radio" value="email")
-				p By Email Only
-				input(name="app_auth_type" type="radio" value="phone") 
-				p By Phone Only
-				input(name="app_auth_type" type="radio" value="two-factor") 
-				p By Two-Factor Auth (Email and Phone)
-			button Signup!
+				select(name="app_auth_type" class="margined full-width") 
+					option(value="None Selected" selected) Select Auth Method
+					option(value="email") By Email Only
+					option(value="phone") By Phone Only
+					option(value="two-factor") By Two-Factor Auth (Email and Phone)
+
+			button(id="setup-form-submit" class="center full-width padded") Signup!

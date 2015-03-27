@@ -3,7 +3,7 @@
 
 Publishing for cool people.
 
-	Ecrit  = () ->
+	Ecrit  = (port) ->
 
 Here's where we require our [npm modules](https://npmjs.com). Everything specified in `package.json` is usually instantiated here.
 
@@ -25,6 +25,7 @@ Here's where we require our [npm modules](https://npmjs.com). Everything specifi
 		i18n			= require 'i18n'
 		nodemailer 		= require 'nodemailer'
 		twilio 			= require 'twilio'
+		passport 		= require 'passport'
 
 Require local files as modules. Note the relative paths.
 
@@ -78,7 +79,7 @@ Configure i18n locales.
 					
 					if config.app_i18n_locales
 						i18n.configure {
-							locales: config.i18n.locales
+							locales: config.app_i18n_locales
 							defaultLocale: 'en'
 							directory: './config/i18n/locales'
 						}
@@ -86,11 +87,15 @@ Configure i18n locales.
 
 Configure SMS functionality using [Twilio](http://twilio.com)
 
-					if config.app_twilio_sid and config.app_twilio_authToken
+					if config.app_twilio_sid and config.app_twilio_authToken and config.app_auth_type is ('phone' or 'two-factor')
 						app.sms = twilio config.twilio.sid, config.twilio.authToken
 						app.sms.incomingPhoneNumbers.get (err, data) ->
 							app.error "Your app must have a Twilio phone number to provision for auth. Go to https://www.twilio.com/user/account/phone-numbers/incoming for more info." if err
 							app.phone_number = data.incoming_phone_numbers[0].phone_number
+
+					if config.app_email_service and config.app_email and config.app_email_password and config.app_auth_type is ('email' or 'two-factor')
+						app.postman = nodemailer.createTransport { service: config.app_email_service, auth: { user: config.app_email, pass: config.app_email_password } }
+						app.dialog "Email configured."
 				
 				else
 					app.dialog "First install, additional setup required"
@@ -99,7 +104,7 @@ Configure SMS functionality using [Twilio](http://twilio.com)
 Set the TCP/IP port for the app to listen on. During development it's set at `localhost:1234` 
 but it can be any number that isn't already used by any other system software (such as mongodb, which rests on `localhost:27017`).
 
-				app.set 'port', process.env.PORT or 1234
+				app.set 'port', port or process.env.PORT or 1234
 
 Set the view engine. Écrit uses [Jade](http://jade-lang.com/) by default.
 
@@ -131,6 +136,15 @@ Attach controllers.
 				for category, list of controllers
 					app.controllers[category] = {}
 					app.controllers[category][name] = controller for name, controller of list app
+
+Configure Passport
+
+				passport.serializeUser (user, done) ->
+					done(null, user.id)
+
+				passport.deserializeUser (id, done) ->
+					app.models.users.findById id, (err, user) ->
+						done(err, user)
 
 Configure middleware and REST routes
 

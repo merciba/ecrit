@@ -6,7 +6,8 @@ The CLI interface for the Écrit publishing framework.
 	fs = require 'fs-sync'
 	path = require('path')
 	pkg = require(path.join(__dirname, 'package.json'))
-	exec = require('exec')
+	exec = require('child_process').exec
+	spawn = require('child_process').spawn
 	prompt = require('prompt')
 	isEmpty = require 'empty-dir'
 	random = require 'random-token'
@@ -26,10 +27,9 @@ The CLI interface for the Écrit publishing framework.
 		console.log exitmsg if exitmsg
 		process.exit 0
 
-	done 'Écrit: [Error: Target exists and is not empty]'.red if not targetEmpty
-
 	switch process.argv[2]
 		when 'create'
+			done 'Écrit: [Error: Target exists and is not empty]'.red if not targetEmpty
 			prompt.get { 
 				properties: {
 					name: {
@@ -39,13 +39,6 @@ The CLI interface for the Écrit publishing framework.
 						message: 'Name must contain only the characters A-Z|a-z'
 						default: path.basename config.target
 						required: true
-					}
-					template: {
-						description: 'Template to use'
-						type: 'string'
-						pattern: /(phone-auth|standard)/i
-						message: 'Must enter a valid template name.'
-						default: 'standard'
 					}
 					mongo_host: {
 						description: 'MongoDB host'
@@ -69,30 +62,18 @@ The CLI interface for the Écrit publishing framework.
 			}, (err, result) ->
 				done err.red if err
 				config[key] = value for key, value of result
-				switch config.template
-					when 'phone-auth'
-						prompt.get { 
-							properties: {
-								twilio_sid: {
-									description: 'Twilio Account SID'
-									type: 'string'
-									required: true
-									message: 'You must supply Twilio auth credentials to use this template.'
-									default: ''
-								}
-								twilio_auth_token: {
-									description: 'Twilio Auth Token'
-									type: 'string'
-									message: 'You must supply Twilio auth credentials to use this template.'
-									required: true
-									default: ''
-								}
-							}
-						}, (err, result) ->
-							done err.red if err
-							config[key] = value for key, value of result
-							install config, done
-					when 'standard'
-						install config, done
+				install config, done
+
+		when 'test'
+			if not fs.exists path.join(__dirname, 'factory/node_modules')
+				factory = path.join(__dirname, 'factory')
+				console.log "Installing NPM Modules for /factory..."
+				exec("cd #{factory} && npm install")
+				console.log "Successfully installed NPM Modules in /factory/node_modules".green
+
+			testTarget = path.join(__dirname, 'test/**/*litcoffee')
+			test = spawn("mocha", ["--compilers", "coffee:coffee-script/register", testTarget])
+			test.stdout.pipe(process.stdout)
+			test.stderr.pipe(process.stderr)
 
 		else console.log "Not a valid parameter. \n\t`ecrit [create] [directory]`"

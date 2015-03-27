@@ -9,7 +9,7 @@ Middleware
 
 			'/': [ app.controllers.global.before_all ]
 
-			'/js': [ app.bundle "server/public/scripts" ]
+			'/js/build': [ app.bundle "server/public/scripts" ]
 
 			'/api/*': [ app.controllers.global.api ]
 

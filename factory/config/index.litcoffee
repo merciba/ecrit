@@ -4,7 +4,9 @@ Config
 	module.exports = {
 		sessionSecret : Date()
 
-		app_id: '<[app_id]>'
+		app_id: 'factory'
+
+		app_url: 'http://localhost:9000'
 
 		data: {
 
@@ -16,11 +18,11 @@ Config
 			connections: {
 				mongo: {
 					adapter: 'mongo'
-					host: '<[mongo_host]>',
+					host: 'localhost',
 					port: 27017,
-					user: '<[mongo_user]>',
-					password: '<[mongo_password]>',
-					database: '<[app_id]>'
+					user: '',
+					password: '',
+					database: 'factory'
 				}
 			}
 

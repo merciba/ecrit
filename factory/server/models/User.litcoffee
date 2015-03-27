@@ -45,6 +45,11 @@ User Model
 				unique: true
 			}
 
+			verified: {
+				type: 'boolean'
+				defaultsTo: false
+			}
+
 			phone_token: {
 				type: 'string'
 				required: false

@@ -13,10 +13,10 @@ HTTP Post
 				app.controllers.users.send_verify_email, 
 				app.controllers.users.send_verify_sms, 
 				app.controllers.users.create_new_user,
-				(err, user) ->
-					if user? and app.isSetup()?
-						res.json user
-					else	
+				(req, res) ->
+					if req.user? and app.isSetup()
+						res.json req.user
+					else
 						res.json { error: "Error during Setup." }, 500
 			]
 

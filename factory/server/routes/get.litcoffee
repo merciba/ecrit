@@ -42,7 +42,15 @@ HTTP Get
 					}
 			]
 
-			'/verify/:token': [ app.controllers.users.verify_token ]
+			'/verify/:token': [ 
+				app.controllers.users.verify_token, 
+				(req, res) ->
+					res.render 'dashboard', { 
+						title : 'Écrit'
+						description: app.__ 'Dashboard'
+						require: ['dashboard']
+					}
+			]
 
 			'/:model': [
 				(req, res) ->

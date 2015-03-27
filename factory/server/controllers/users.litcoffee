@@ -15,14 +15,14 @@ Creates a new user
 			create_new_user: (req, res, next) ->
 				query = {}
 				for key, value of app.models.users.attributes 
-					query[key] = req.body[key] if req.body.users.hasOwnProperty key
-
-				if not app.isSetup()
-					query.admin = true 
+					query[key] = req.body.user[key] if req.body.user.hasOwnProperty key
 				
 				app.models.users.create query, (err, model) ->
-					return res.json { error: err }, 500 if err
-					next null, model
+					if err
+						res.status(500).json { error: err }
+					else
+						req.user = model
+						next()
 
 ###### `controllers.users.validate_new_user`
 
@@ -30,44 +30,53 @@ Validates a new email address via `POST`
 
 			validate_new_user: (req, res, next) ->
 				req.body.user.verified = false
+				req.body.user.admin = true if not (req.body.user.admin or app.isSetup())
+				app.log "Validating new user with #{JSON.stringify(req.body.user)}"
 				if req.body.user.id
 					isEmail = validator.isEmail req.body.user.id
 					isPhone = phone req.body.user.id
 					
-					if isEmail? 
+					if isEmail?
+						app.log "Email detected"
 						if (app.isSetup() and app.config.app_auth_type is ('email' or 'two-factor')) or (not app.isSetup() and req.body.config.app_auth_type is ('email' or 'two-factor'))
-							req.body.user.email = req.body.submitted
+							req.body.user.email = req.body.user.id
 						else
-							res.json { error: "User ID/Auth Type mismatch" }, 500
+							res.status(500).json { error: "User ID/Auth Type mismatch" }
 					else if isPhone?
+						app.log "Phone number detected"
 						if (app.isSetup() and app.config.app_auth_type is 'phone') or (not app.isSetup() and req.body.config.app_auth_type is 'phone')
 							req.body.user.id = isPhone[0]
 							req.body.user.phone = isPhone[0]
 							req.body.user.country = isPhone[1]
 						else
-							res.json { error: "User ID/Auth Type mismatch" }, 500
+							app.error "User ID/Auth Type mismatch"
+							res.status(500).json { error: "User ID/Auth Type mismatch" }
 					else
-						res.json { error: "User ID/Auth Type mismatch" }, 500
-
-					delete req.body.submitted
+						app.error "User ID/Auth Type mismatch"
+						res.status(500).json { error: "User ID/Auth Type mismatch" }
 
 					# Make sure the user doesn't already exist
 					query = { id: req.body.user.id }
 					app.models.users.findOne query, (err, user) ->
 						if user and Object.keys(user).length
-							res.json { error: "User already exists" }, 500
+							app.error "User already exists"
+							res.status(500).json { error: "User already exists" }
 						else
 							# Make sure the password is valid
+							app.dialog "New user #{req.body.user.id} valid."
 							if req.body.user.email and req.body.user.password and req.body.user.password_confirm
 								if (req.body.user.password is req.body.user.password_confirm) and req.body.user.password.match /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
+									app.dialog "Password valid."
 									next()
 								else
-									res.json { error: "Password Not Valid, must be at least 8 characters long, have one lower case letter, one upper case letter, one digit, one special character, and no spaces." }, 500
+									app.error "Password Not Valid, must be at least 8 characters long, have one lower case letter, one upper case letter, one digit, one special character, and no spaces."
+									res.status(500).json { error: "Password Not Valid, must be at least 8 characters long, have one lower case letter, one upper case letter, one digit, one special character, and no spaces." }
 							else if req.body.user.phone and req.body.user.country
+								app.dialog "New user #{req.body.user.id} valid."
 								next()
 
 				else
-					res.json { error: "Not Valid" }, 500
+					res.status(500).json { error: "Not Valid" }
 
 ###### `controllers.users.send_verify_sms`
 
@@ -79,14 +88,14 @@ Sends a verification SMS via `POST`
 						
 					app.sms.messages.create { to: req.body.user.id, from: app.phone_number, body: "Your #{app.config.app_name} auth token is #{req.body.user.phone_token}" }, (err, message) ->
 						if err
-							res.json { error: err }, 500 
+							res.status(500).json { error: err } 
 						else
 							next()
 
 				else if app.config.app_auth_type is 'email'
 					next()
 				else
-					res.json { error: "Not Valid or Not Configured" }
+					res.status(500).json { error: "Not Valid or Not Configured" }
 
 ###### `controllers.users.send_verify_email`
 
@@ -99,21 +108,24 @@ Sends a verification email via `POST`
 					mail = {
 						from: "#{app.config.app_name} <#{app.config.app_email}>"
 						to: req.body.user.email
-						subject: 'Hello #{req.body.user.first_name}'
-						text: app.config.signup_email_text
-						html: "#{app.config.signup_email_html} <p>Click <a href=\"http://#{app.config.app_host}/verify/#{req.body.user.token}\">here</a> to validate your account and finish setting up your app, #{app.config.app_name}.</p>"
+						subject: "Hello #{req.body.user.first_name}"
+						text: "Thanks for signing up for #{app.config.app_name}"
+						html: "<h2>Thanks for signing up for #{app.config.app_name}</h2> <p>Click <a href=\"#{app.config.app_url}/verify/#{req.body.user.token}\">here</a> to validate your account and finish setting up your app, #{app.config.app_name}.</p>"
 					}
 
 					app.postman.sendMail mail, (err, result) ->
 						if err
-							res.json { error: err }, 500 
+							app.error err
+							res.status(500).json { error: err } 
 						else
+							app.dialog "Verify Email sent to #{req.body.user.email}."
 							next()
 
 				else if app.config.app_auth_type is 'phone'
 					next()
 				else
-					res.json { error: "App Email Not Valid or Not Configured" }, 500
+					res.error "App Email Not Valid or Not Configured"
+					res.status(500).json { error: "App Email Not Valid or Not Configured" }
 
 ###### `controllers.users.verify_token`
 
@@ -121,19 +133,21 @@ Verifies a token sent via a `GET` to `/verify/:token` or a `POST` to `/verify` w
 
 			verify_token: (req, res, next) ->
 				if req.params.token?
+					app.log "Verifying Token #{req.params.token}"
 					query = { token: req.params.token }
 					replacement = { verified: true }
 					app.models.users.update query, replacement, (err, user) ->
 						if err
-							res.render 'error', { error: err }
+							next err
 						else
-							res.render 'verified', query
+							next()
+
 				else if req.body.user.id and req.body.user.phone_token
 					query = { phone_token: req.body.user.token }
 					replacement = { verified: true }
 					app.models.users.update query, replacement, (err, user) ->
 						if err
-							res.json { error: err }, 500
+							res.status(500).json { error: err }
 						else
 							res.json { status: "ok" }, 200
 
@@ -145,15 +159,15 @@ Logs a user in with email/password.
 				if req.body.user.id and ((app.config.app_auth_type is 'email' or 'two-factor') and req.body.user.password)
 					app.models.users.findOne { id: req.body.user.id }, (err, user) ->
 						if err
-							res.json { error: err } 
+							res.status(500).json { error: err } 
 						else if user and user.login req.body.user.password
 							next()
 						else if not user
-							res.json { error: "User Doesn't Exist" }, 500
+							res.status(500).json { error: "User Doesn't Exist" }
 						else if not user.login req.body.user.password
-							res.json { error: "Invalid Credentials" }, 500
+							res.status(500).json { error: "Invalid Credentials" }
 				else if app.config.app_auth_type is 'email' or 'two-factor'
-					res.json { error: "Invalid Credentials"}, 500
+					res.status(500).json { error: "Invalid Credentials"}
 				else
 					next()
 
@@ -166,15 +180,15 @@ Logs a user in with phone/token.
 					
 					app.models.users.findOne { id: req.body.user.id }, (err, user) ->
 						if err
-							res.json { error: err } 
+							res.status(500).json { error: err } 
 						else if user and user.phoneLogin req.body.user.phone_token
 							next()
 						else if not user
-							res.json { error: "User Doesn't Exist" }, 500
+							res.status(500).json { error: "User Doesn't Exist" }
 						else if not user.login req.body.user.token
-							res.json { error: "Invalid Credentials" }, 500
+							res.status(500).json { error: "Invalid Credentials" }
 				else if app.config.app_auth_type is 'phone' or 'two-factor'
-					res.json { error: "Invalid Credentials"}, 500
+					res.status(500).json { error: "Invalid Credentials"}
 				else
 					next()
 

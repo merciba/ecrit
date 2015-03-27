@@ -1,6 +1,8 @@
 Config Model
 ============
 
+	bcrypt = require 'bcrypt'
+
 	module.exports = {
 
 		identity: 'config'
@@ -20,15 +22,15 @@ Config Model
 				unique: true
 			}
 
-			app_host: {
+			app_url: {
 				type: 'string'
 				required: false
-				defaultsTo: 'localhost'
+				defaultsTo: 'http://localhost:1234'
 			}
 
 			app_email: {
 				type: 'string'
-				required: true
+				required: false
 			}
 
 			app_email_password: {
@@ -62,18 +64,6 @@ Config Model
 				type: 'string'
 				required: true
 				in: ['email', 'phone', 'two-factor']
-			}
-
-			signup_email_text: {
-				type: 'string'
-				required: false
-				defaultsTo: "Thanks for signing up to #{this.app_name}!"
-			}
-
-			signup_email_html: {
-				type: 'string'
-				required: false
-				defaultsTo: "<h1>Thanks for signing up to #{this.app_name}!</h1>"
 			}
 
 			toJSON: () ->

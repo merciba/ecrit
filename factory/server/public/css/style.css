@@ -3,13 +3,46 @@ html {
 	font-size: 1em;
 }
 
+form input, form select {
+	display: block;
+}
+
 footer {
 	position: fixed;
 	bottom: 0;
 }
 
+.padded {
+	padding: 1em;
+}
+
+.margined {
+	margin: 1em;
+}
+
+.hidden {
+	display: none;
+}
+
 .container {
 	width: 100%;
+}
+
+.pull-left {
+	float: left;
+}
+
+.pull-right {
+	float: right;
+}
+
+.bottom {
+	position: absolute;
+	bottom: 0;
+}
+
+.block {
+	display: block;
 }
 
 .center {
@@ -19,6 +52,10 @@ footer {
 
 .text-centered {
 	text-align: center;
+}
+
+.full-width {
+	width: 100%;
 }
 
 .full-height: {

@@ -9,13 +9,14 @@ html
     script(src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js" type='application/javascript')
     if require
       each module in require
-        script(src='/js/modules/#{module}.js', type='application/javascript')
+        script(src='/js/build/modules/#{module}.js', type='application/javascript')
 
   body
     header
-      h1 Header 
+      nav 
+        block nav
     .container
       block content
-      block nav
-    footer
-      p Footer
+    footer(class="full-width")
+      span Footer Goes Here
+      span(class="pull-right") Powered by Écrit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
