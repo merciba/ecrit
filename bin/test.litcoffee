@@ -6,6 +6,10 @@
 	exec = require('child_process').exec
 	spawn = require('child_process').spawn
 	pkg = require(path.join(__dirname, '../package.json'))
+	jsonfile = require 'jsonfile'
+	testOptions = {
+		console: false
+	}
 
 	module.exports = (end) ->
 
@@ -14,6 +18,11 @@
 			console.log "Installing NPM Modules for /factory..."
 			exec("cd #{factory} && npm install")
 			console.log "Successfully installed NPM Modules in /factory/node_modules".green
+
+		for el, i in process.argv
+			testOptions[process.argv[i].replace('--', '')] = true if i > 2 and testOptions.hasOwnProperty process.argv[i].replace('--', '')
+		
+		jsonfile.writeFileSync path.join(__dirname, '../test/config.json'), testOptions
 
 		testTarget = path.join(__dirname, '../test/**/*litcoffee')
 		test = spawn("mocha", ["--compilers", "coffee:coffee-script/register", testTarget])
