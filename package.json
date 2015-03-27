@@ -1,6 +1,6 @@
 {
   "name": "ecrit",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "An extremely-opinionated Node app framework.",
   "main": "./bin/ecrit.js",
   "scripts": {
@@ -12,6 +12,7 @@
     "url": "https://github.com/merciba/ecrit"
   },
   "author": "Merciba <team@merciba.com>",
+  "preferGlobal": true,
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/merciba/ecrit/issues"
