@@ -1,0 +1,12 @@
+extend layout
+block content
+  .container(data-module="login" class="center full-height five-sixths")
+    h3 #{description}
+	br
+	form(role='form', action="/login", method="post", style='max-width: 300px;')
+		input(type='text', name="username", placeholder='Enter Username')
+		input(type='password', name="password", placeholder='Password')
+		button.btn.btn-default(type='submit') Submit
+		&nbsp;
+		a(href='/')
+			button.btn.btn-primary(type="button") Cancel
