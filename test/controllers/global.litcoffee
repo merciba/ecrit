@@ -32,8 +32,8 @@ Begin tests.
 		
 		it 'before_all', (done) ->
 
-Scenario: Any
-Should: Display the time, method and original URL if `ecrit test` is invoked with the `--console` flag.
+__Scenario:__ Any  
+__Should:__ Display the time, method and original URL if `ecrit test` is invoked with the `--console` flag.
 
 			req.method = 'GET'
 			req.originalUrl = 'http://test.com'
@@ -43,8 +43,8 @@ Should: Display the time, method and original URL if `ecrit test` is invoked wit
 
 		it 'api', (done) ->
 
-Scenario: req.session.api_token exists
-Should: Callback
+__Scenario:__ req.session.api_token exists  
+__Should:__ Callback
 
 			req.session = {
 				api_token: 'mock api token'
@@ -52,8 +52,8 @@ Should: Callback
 
 			controller.api req, res, () ->
 
-Scenario: req.session.api_token does not exist.
-Should: Call `res.json` with `{ error: "Unauthorized" }`
+__Scenario:__ req.session.api_token does not exist.  
+__Should:__ Call `res.json` with `{ error: "Unauthorized" }`
 
 				delete req.session.api_token
 
