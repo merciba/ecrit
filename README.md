@@ -15,4 +15,6 @@ Install
 
 `npm install ecrit`
 
-## Not yet ready for production. Work in progress!
+## caveat
+
+Not yet ready for production. Work in progress!

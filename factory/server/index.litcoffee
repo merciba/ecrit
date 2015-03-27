@@ -104,7 +104,7 @@ Configure SMS functionality using [Twilio](http://twilio.com)
 Set the TCP/IP port for the app to listen on. During development it's set at `localhost:1234` 
 but it can be any number that isn't already used by any other system software (such as mongodb, which rests on `localhost:27017`).
 
-				app.set 'port', port or process.env.PORT or 1234
+				app.set 'port', port or process.env.PORT or 9009
 
 Set the view engine. Écrit uses [Jade](http://jade-lang.com/) by default.
 

@@ -1,12 +1,14 @@
 Config
 ======
 
+	pkg = require '../package.json'
+
 	module.exports = {
 		sessionSecret : Date()
 
-		app_id: 'factory'
+		app_id: pkg.name
 
-		app_url: 'http://localhost:9000'
+		app_url: 'http://localhost:9009'
 
 		data: {
 
@@ -22,7 +24,7 @@ Config
 					port: 27017,
 					user: '',
 					password: '',
-					database: 'factory'
+					database: pkg.name
 				}
 			}
 

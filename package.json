@@ -1,8 +1,8 @@
 {
   "name": "ecrit",
   "version": "1.0.0",
-  "description": "Publishing for cool people.",
-  "main": "install.js",
+  "description": "App Publishing for cool people.",
+  "main": "./bin/ecrit.js",
   "scripts": {
     "test": "mocha --compilers coffee:coffee-script/register test/*.litcoffee"
   },
