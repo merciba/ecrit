@@ -22,7 +22,7 @@ Create mock server objects to pass through the tests
 
 Assign the controller
 
-	global = require("../../factory/server/controllers/global")(app)
+	controller = require("../../factory/server/controllers/global")(app)
 
 Begin tests.
 
@@ -37,7 +37,7 @@ Should: Display the time, method and original URL if `ecrit test` is invoked wit
 
 			req.method = 'GET'
 			req.originalUrl = 'http://test.com'
-			global.before_all req, res, done
+			controller.before_all req, res, done
 
 ###### `api`
 
@@ -50,7 +50,7 @@ Should: Callback
 				api_token: 'mock api token'
 			}
 
-			global.api req, res, () ->
+			controller.api req, res, () ->
 
 Scenario: req.session.api_token does not exist.
 Should: Call `res.json` with `{ error: "Unauthorized" }`
@@ -61,7 +61,7 @@ Should: Call `res.json` with `{ error: "Unauthorized" }`
 					console.log JSON.stringify json if testConfig.console
 					done()
 				
-				global.api req, res, done
+				controller.api req, res, done
 
 ###### `set_config`
 
