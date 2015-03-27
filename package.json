@@ -1,6 +1,6 @@
 {
   "name": "ecrit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "App Publishing for cool people.",
   "main": "./bin/ecrit.js",
   "scripts": {
