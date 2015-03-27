@@ -1,6 +1,7 @@
 ### Global Controller
 
 	nodemailer = require 'nodemailer'
+	twilio = require 'twilio'
 
 	module.exports = (app) ->
 
@@ -14,7 +15,7 @@ Put things in here if you want them to happen before any other middleware.
 				app.log "#{req.method.green} #{req.originalUrl}"
 				next()
 
-###### global.api
+###### api
 
 Validates `api/` endpoints.
 

@@ -28,7 +28,8 @@ Begin tests.
 
 	describe 'controllers.global', () ->
 
-###### [before_all](https://github.com/merciba/ecrit/blob/master/factory/server/controllers/global.litcoffee#before_all)
+[before_all](https://github.com/merciba/ecrit/blob/master/factory/server/controllers/global.litcoffee#before_all)
+---
 		
 		it 'before_all', (done) ->
 
@@ -39,7 +40,8 @@ __Should:__ Display the time, method and original URL if `ecrit test` is invoked
 			req.originalUrl = 'http://test.com'
 			controller.before_all req, res, done
 
-###### [api](https://github.com/merciba/ecrit/blob/master/factory/server/controllers/global.litcoffee#api)
+[api](https://github.com/merciba/ecrit/blob/master/factory/server/controllers/global.litcoffee#api)
+---
 
 		it 'api', (done) ->
 
@@ -63,7 +65,8 @@ __Should:__ Call `res.json` with `{ error: "Unauthorized" }`
 				
 				controller.api req, res, done
 
-###### [set_config](https://github.com/merciba/ecrit/blob/master/factory/server/controllers/global.litcoffee#set_config)
+[set_config](https://github.com/merciba/ecrit/blob/master/factory/server/controllers/global.litcoffee#set_config)
+---
 
 		it 'set_config', (done) ->
 
