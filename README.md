@@ -1,4 +1,4 @@
-Écrit<sup>[[beta](#TODO)]</sup>
+Écrit<sup>[[beta](#todo)]</sup>
 =====
 ([IPA](http://en.wiktionary.org/wiki/Appendix:French_pronunciation): /e.kʁi/)
 
@@ -25,6 +25,10 @@ Commands
 
 Creates an app at `[folder]` where `[folder]` is a relative path to an existing empty directory.  
 If `[folder]` doesn't exist within the current working directory, it will be created.
+
+### `ecrit start`
+
+Starts an Écrit app, from within its' root folder. 
 
 ### `ecrit test [--option]`
 
