@@ -31,7 +31,6 @@ Validates a new email address via `POST`
 			validate_new_user: (req, res, next) ->
 				req.body.user.verified = false
 				req.body.user.admin = true if not (req.body.user.admin or app.isSetup())
-				app.log "Validating new user with #{JSON.stringify(req.body.user)}"
 				if req.body.user.id
 					isEmail = validator.isEmail req.body.user.id
 					isPhone = phone req.body.user.id

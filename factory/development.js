@@ -10,9 +10,8 @@ gulp.task('build', function() {
 
 gulp.task('dev', function() {
 	
-	nodemon({ script: 'index.js', ext: 'html litcoffee jade', ignore: ['server/data', 'browser']})
+	nodemon({ script: 'production.js', ext: 'html litcoffee jade', ignore: ['server/data', 'browser']})
     .on('restart', function () {
-      console.log('Écrit has been restarted!')
     })
 
     gulp.watch('./browser/**/*.litcoffee', ['build'])
@@ -20,3 +19,4 @@ gulp.task('dev', function() {
 })
 
 gulp.task('default', ['dev']);
+gulp.start();

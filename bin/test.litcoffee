@@ -28,3 +28,8 @@
 		test = spawn("mocha", ["--compilers", "coffee:coffee-script/register", testTarget])
 		test.stdout.pipe(process.stdout)
 		test.stderr.pipe(process.stderr)
+		test.on 'close', (code) ->
+			if code is 0 
+				end "Test Complete!"
+			else
+				end "Testing Error."

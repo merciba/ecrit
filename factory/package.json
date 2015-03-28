@@ -1,10 +1,10 @@
 {
   "name": "factory",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "An Écrit app",
-  "main": "index.js",
+  "main": "production.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node production.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "<[author]> <<[email]>>",

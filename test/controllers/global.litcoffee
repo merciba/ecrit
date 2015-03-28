@@ -1,5 +1,4 @@
-Global Controller Test
-===
+### Global Controller Test
 
 Unit tests for the `global` controller. Any new methods added to `/server/controllers/global` should have matching tests here. 
 
@@ -7,17 +6,22 @@ Unit tests for the `global` controller. Any new methods added to `/server/contro
 	path = require 'path'
 	colors = require 'colors'
 	moment = require 'moment'
+	chai = require 'chai'
+	chai.should()
 	testConfig = require '../config.json'
 
 Create mock server objects to pass through the tests
 
-	req = {}
+	req = {
+		params: {}
+		body: {}
+	}
 	res = {}
 	app = {
 		dialog: (str) -> console.log str.green if testConfig.console
-		log: (str) -> console.log "#{moment().format('D MMM YYYY H:mm:ss').bgMagenta.black}: #{"Info:".cyan} #{str.cyan}" if testConfig.console
-		error: (str) -> throw new Error "#{moment().format('D MMM YYYY H:mm:ss').bgMagenta.black}: #{"Error:".red} #{str.red}" if testConfig.console
-		warn: (str) -> console.warn "#{moment().format('D MMM YYYY H:mm:ss').bgMagenta.black}: #{"Warning:".yellow} #{str.yellow}" if testConfig.console
+		log: (str) -> console.log str.cyan if testConfig.console
+		error: (str) -> throw new Error str.red if testConfig.console
+		warn: (str) -> console.warn "[Warning]".yellow, str.yellow if testConfig.console
 	}
 
 Assign the controller
@@ -61,6 +65,8 @@ __Should:__ Call `res.json` with `{ error: "Unauthorized" }`
 
 				res.json = (json) ->
 					console.log JSON.stringify json if testConfig.console
+					json.should.have.property "error"
+					json.error.should.equal "Unauthorized"
 					done()
 				
 				controller.api req, res, done

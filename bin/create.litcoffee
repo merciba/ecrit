@@ -72,6 +72,7 @@ Create the folder where the app will reside.
 				options = {
 					transform: (read, write) ->
 						read = read.pipe(es.replace("<[#{key}]>", value)) for key, value of config
+						read = read.pipe(es.replace("factory", config.name))
 						read.pipe(write)
 				}
 				

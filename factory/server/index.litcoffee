@@ -56,14 +56,14 @@ Instantiate the global `app` object. `app` will contain the main [Express](http:
 
 Re-route console methods to app, so that we can control language translation and put a timestamp on output
 
-			app.dialog = (str) -> console.log str.green
-			app.log = (str) -> console.log "#{moment().format('D MMM YYYY H:mm:ss').bgMagenta.black}: #{"Info:".cyan} #{str.cyan}"
-			app.error = (str) -> throw new Error "#{moment().format('D MMM YYYY H:mm:ss').bgMagenta.black}: #{"Error:".red} #{str.red}"
-			app.warn = (str) -> console.warn "#{moment().format('D MMM YYYY H:mm:ss').bgMagenta.black}: #{"Warning:".yellow} #{str.yellow}"
+			app.dialog = (str) -> console.log "[#{data_config.app_id}]".magenta, str.green
+			app.log = (str) -> console.log "[#{data_config.app_id}]".magenta, str.cyan
+			app.error = (str) -> throw new Error str.red
+			app.warn = (str) -> console.warn "[#{data_config.app_id}]".magenta, "[Warning]".yellow, str.yellow
 
 			app.models = dbModels.collections
 			app.connections = dbModels.connections
-			app.dialog "Database Connected"
+			app.log "Database Connected"
 			app.data_config = data_config
 			app.isSetup = () -> return app.hasOwnProperty('config')
 
@@ -98,7 +98,7 @@ Configure SMS functionality using [Twilio](http://twilio.com)
 						app.dialog "Email configured."
 				
 				else
-					app.dialog "First install, additional setup required"
+					app.warn "First install, additional setup required"
 					app.__ = (str) -> return str
 
 Set the TCP/IP port for the app to listen on. During development it's set at `localhost:1234` 
@@ -153,13 +153,12 @@ Configure middleware and REST routes
 				app.post.apply app, [route].concat methods for route, methods of routes.post app
 				app.put.apply app, [route].concat methods for route, methods of routes.put app
 				app.delete.apply app, [route].concat methods for route, methods of routes.delete app
-				app.use.apply app, [route].concat methods for route, methods of routes.error app
 
 Start the server.
 
 				server = require('http').createServer app
 				server.listen app.get("port"), () ->
-					console.log "#{"Powered By Écrit".bgMagenta.black}: #{app.config?.app_name || app.data_config.app_id.cyan} (#{app.__('version')} #{pkg.version.cyan}) #{app.__('on')} #{ip.address().blue}:#{app.get('port').toString().red}"
+					console.log "[#{app.data_config.app_id}]".magenta, "v#{pkg.version.cyan} #{app.__('on')} #{ip.address().blue}:#{app.get('port').toString().red}"
 
 		@
 
