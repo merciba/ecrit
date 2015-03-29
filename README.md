@@ -8,7 +8,11 @@ Use this framework as a more versatile alternative to Ghost or Wordpress, or if 
 Install
 -------
 
-First, [Install MongoDB.](http://docs.mongodb.org/manual/installation/)  
+First, make sure you have a Mongo database running somewhere.  
+If you're using a hosted service like [Compose](http://compose.io), have your database's URL, username and password on hand, you'll need them for the following steps.  
+
+If you're just developing or want to use a self-hosted MongoDB, you'll need to [Install MongoDB](http://docs.mongodb.org/manual/installation/) if it's not already installed.  
+Make sure you run `mongod` (may require sudo) and confirm the DB is running with `netstat -an | grep 27017`. If you get any results, Mongo is running.
 
 Next, install Écrit via NPM. Open up your Terminal and type
 
