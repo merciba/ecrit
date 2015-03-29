@@ -21,16 +21,16 @@ Now you're good to go! Type `ecrit -v` to confirm you've installed it and see wh
 Commands
 --------
 
-### [`ecrit create [folder]`](https://github.com/merciba/ecrit/blob/master/bin/create.litcoffee)
+#### [`ecrit create [folder]`](https://github.com/merciba/ecrit/blob/master/bin/create.litcoffee)
 
 Creates an app at `[folder]` where `[folder]` is a relative path to an existing empty directory.  
 If `[folder]` doesn't exist within the current working directory, it will be created.
 
-### [`ecrit start`](https://github.com/merciba/ecrit/blob/master/bin/start.litcoffee)
+#### [`ecrit start`](https://github.com/merciba/ecrit/blob/master/bin/start.litcoffee)
 
 Starts an Écrit app. Must be within `[folder]`, cannot be invoked from subdirectories or parent(s). 
 
-### [`ecrit test [--folder]`](https://github.com/merciba/ecrit/blob/master/bin/test.litcoffee)
+#### [`ecrit test [--folder]`](https://github.com/merciba/ecrit/blob/master/bin/test.litcoffee)
 
 Runs unit tests for the framework. Currently only `--console` option is supported.
 
