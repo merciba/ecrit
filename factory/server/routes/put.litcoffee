@@ -14,6 +14,9 @@ HTTP Put
 
 		return {
 
-			'/api/:type/:id': [ update_resource ]
+			'/api/:type/:id': [
+				app.controllers.global.configured,
+				update_resource
+			]
 
 		}

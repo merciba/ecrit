@@ -29,6 +29,9 @@ HTTP Post
 						res.json { error: "Error during Setup." }, 500
 			]
 
-			'/api/:type': [ create_resource ]
+			'/api/:type': [
+				app.controllers.global.configured,
+				create_resource 
+			]
 
 		}

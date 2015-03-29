@@ -13,6 +13,9 @@ HTTP Delete
 
 		return {
 
-			'/api/:type/:id': [ delete_resource ]
+			'/api/:type/:id': [
+				app.controllers.global.configured,
+				delete_resource
+			]
 
 		}

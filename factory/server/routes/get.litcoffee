@@ -6,6 +6,7 @@ HTTP Get
 		return {
 
 			'/': [
+				app.controllers.global.configured,
 				(req, res) ->
 					res.render app.config.app_name, { 
 						title : 'Écrit'
@@ -14,6 +15,7 @@ HTTP Get
 			]
 
 			'/login': [
+				app.controllers.global.configured,
 				(req, res) ->
 					res.render 'login', { 
 						title : app.config.app_name
@@ -24,7 +26,6 @@ HTTP Get
 
 			'/setup': [
 				(req, res) ->
-					console.log "test"
 					res.render 'setup', { 
 						title : 'Écrit'
 						description: app.__ 'Setup'
@@ -34,6 +35,7 @@ HTTP Get
 			]
 
 			'/dashboard': [
+				app.controllers.global.configured,
 				(req, res) ->
 					res.render 'dashboard', { 
 						title : 'Écrit'
@@ -43,6 +45,7 @@ HTTP Get
 			]
 
 			'/verify/:token': [ 
+				app.controllers.global.configured,
 				app.controllers.users.verify_token, 
 				(req, res) ->
 					res.render 'dashboard', { 
@@ -53,6 +56,7 @@ HTTP Get
 			]
 
 			'/:type': [
+				app.controllers.global.configured,
 				(req, res) ->
 					if req.params.type.match /(admin|wp-admin|home)/
 						res.redirect '/dashboard'
@@ -70,6 +74,7 @@ HTTP Get
 			]
 
 			'/:type/:id': [
+				app.controllers.global.configured,
 				(req, res) ->
 					query = { type: req.params.type, id: req.params.id }
 
@@ -81,6 +86,7 @@ HTTP Get
 			]
 
 			'/api/:type': [
+				app.controllers.global.configured,
 				(req, res) ->
 					app.models.resource.find({ type: req.params.type }).exec (err, results) ->
 						if err
@@ -90,6 +96,7 @@ HTTP Get
 			]
 
 			'/api/:type/:id': [
+				app.controllers.global.configured,
 				(req, res) ->
 					query = { type: req.params.type, id: req.params.id }
 
