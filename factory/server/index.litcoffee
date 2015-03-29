@@ -77,9 +77,9 @@ Check for an installed app in the db
 
 Configure i18n locales.
 					
-					if config.app_i18n_locales
+					if app.config.app_i18n_locales
 						i18n.configure {
-							locales: config.app_i18n_locales
+							locales: app.config.app_i18n_locales
 							defaultLocale: 'en'
 							directory: './config/i18n/locales'
 						}
@@ -87,14 +87,14 @@ Configure i18n locales.
 
 Configure SMS functionality using [Twilio](http://twilio.com)
 
-					if config.app_twilio_sid and config.app_twilio_authToken and config.app_auth_type is ('phone' or 'two-factor')
-						app.sms = twilio config.twilio.sid, config.twilio.authToken
+					if app.config.app_twilio_sid and app.config.app_twilio_authToken and app.config.app_auth_type is ('phone' or 'two-factor')
+						app.sms = twilio app.config.twilio.sid, app.config.twilio.authToken
 						app.sms.incomingPhoneNumbers.get (err, data) ->
 							app.error "Your app must have a Twilio phone number to provision for auth. Go to https://www.twilio.com/user/account/phone-numbers/incoming for more info." if err
 							app.phone_number = data.incoming_phone_numbers[0].phone_number
 
-					if config.app_email_service and config.app_email and config.app_email_password and config.app_auth_type is ('email' or 'two-factor')
-						app.postman = nodemailer.createTransport { service: config.app_email_service, auth: { user: config.app_email, pass: config.app_email_password } }
+					if app.config.app_email_service and app.config.app_email and app.config.app_email_password and app.config.app_auth_type is ('email' or 'two-factor')
+						app.postman = nodemailer.createTransport { service: app.config.app_email_service, auth: { user: app.config.app_email, pass: app.config.app_email_password } }
 						app.dialog "Email configured."
 				
 				else

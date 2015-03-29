@@ -28,7 +28,7 @@ Validates `api/` endpoints.
 
 #### set_config
 
-Sets the app's config. See [here](/source/models/Config.litcoffee) to view the config's schema.
+Sets the app's config. See [here](https://github.com/merciba/ecrit/blob/master/factory/server/models/Config.litcoffee) to view the config's schema.
 
 			set_config: (req, res, next) ->
 				if req.body.config?
@@ -43,7 +43,7 @@ Sets the app's config. See [here](/source/models/Config.litcoffee) to view the c
 								res.json { error: err }, 500
 							else
 								app.config = config
-								app.dialog "App #{config.app_name} Successfully Configured!"
+								app.dialog "App #{config.app_name} Successfully Updated!"
 								next()
 					else
 						app.models.config.create req.body.config, (err, config) ->
