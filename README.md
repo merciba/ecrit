@@ -2,8 +2,8 @@
 =====
 ([IPA](http://en.wiktionary.org/wiki/Appendix:French_pronunciation): /e.kʁi/)
 
-[![Travis CI Build Status](https://travis-ci.org/merciba/ecrit.svg?branch=master)](https://travis-ci.org/merciba/ecrit)
-[![NPM](https://nodei.co/npm/ecrit.png)](https://nodei.co/npm/ecrit/)
+[![NPM](https://nodei.co/npm/ecrit.png)](https://nodei.co/npm/ecrit/)  
+[![Travis CI Build Status](https://travis-ci.org/merciba/ecrit.svg?branch=master)](https://travis-ci.org/merciba/ecrit)  
 
 An extremely-opinionated Node app framework. Écrit is highly oriented toward readability, accessibility and logical, intuitive code organization. MongoDB is the database of choice here.
 Use this framework as a more versatile alternative to Ghost or Wordpress, or if you've used a similar framework like Sails but prefer Literate CoffeeScript as much as we do.
