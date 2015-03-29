@@ -45,7 +45,7 @@ __Should:__ Display the time, method and original URL if `ecrit test` is invoked
 
 				req.method = 'GET'
 				req.originalUrl = 'http://test.com'
-				
+
 				controller.before_all req, res, done
 
 			scenario_one()

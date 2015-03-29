@@ -1,19 +1,22 @@
 `test` command handler
 ===
 
-	fs = require 'fs-sync'
+	fs = require 'fs'
+	fs_sync = require 'fs-sync'
 	path = require 'path'
 	exec = require('child_process').exec
 	spawn = require('child_process').spawn
 	pkg = require(path.join(__dirname, '../package.json'))
 	jsonfile = require 'jsonfile'
+	Mocha = require 'mocha'
+	mocha = new Mocha
 	testOptions = {
 		console: false
 	}
 
 	module.exports = (end) ->
 
-		if not fs.exists path.join(__dirname, '../factory/node_modules')
+		if not fs_sync.exists path.join(__dirname, '../factory/node_modules')
 			factory = path.join(__dirname, '../factory')
 			console.log "Installing NPM Modules for /factory..."
 			exec("cd #{factory} && npm install")
@@ -24,12 +27,13 @@
 		
 		jsonfile.writeFileSync path.join(__dirname, '../test/config.json'), testOptions
 
-		testTarget = path.join(__dirname, '../test/**/*litcoffee')
-		test = spawn("./node_modules/mocha/bin/mocha", ["--compilers", "coffee:coffee-script/register", testTarget])
-		test.stdout.pipe(process.stdout)
-		test.stderr.pipe(process.stderr)
-		test.on 'close', (code) ->
-			if code is 0 
-				end "Test Complete!"
-			else
-				end "Testing Error."
+		testTarget = path.join __dirname, '../test'
+		
+		for folder in fs.readdirSync testTarget
+			folderPath = path.join __dirname, "../test/#{folder}"
+			if fs.lstatSync(folderPath).isDirectory()
+				mocha.addFile path.join(folderPath, file) for file in fs.readdirSync folderPath
+
+		mocha.run (failures) ->
+		  process.on 'exit', () ->
+		    process.exit failures
