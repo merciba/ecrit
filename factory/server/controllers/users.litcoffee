@@ -8,7 +8,7 @@
 
 		return {
 
-###### create_new_user
+#### create_new_user
 
 Creates a new user
 
@@ -24,7 +24,7 @@ Creates a new user
 						req.user = model
 						next()
 
-###### validate_new_user
+#### validate_new_user
 
 Validates a new email address via `POST`
 
@@ -77,7 +77,7 @@ Validates a new email address via `POST`
 				else
 					res.status(500).json { error: "Not Valid" }
 
-###### send_verify_sms
+#### send_verify_sms
 
 Sends a verification SMS via `POST`
 
@@ -96,7 +96,7 @@ Sends a verification SMS via `POST`
 				else
 					res.status(500).json { error: "Not Valid or Not Configured" }
 
-###### send_verify_email
+#### send_verify_email
 
 Sends a verification email via `POST`
 
@@ -126,7 +126,7 @@ Sends a verification email via `POST`
 					res.error "App Email Not Valid or Not Configured"
 					res.status(500).json { error: "App Email Not Valid or Not Configured" }
 
-###### verify_token
+#### verify_token
 
 Verifies a token sent via a `GET` to `/verify/:token` or a `POST` to `/verify` with `user.phone_token`
 
@@ -150,7 +150,7 @@ Verifies a token sent via a `GET` to `/verify/:token` or a `POST` to `/verify` w
 						else
 							res.json { status: "ok" }, 200
 
-###### email_login
+#### email_login
 
 Logs a user in with email/password.
 
@@ -170,7 +170,7 @@ Logs a user in with email/password.
 				else
 					next()
 
-###### phone_login
+#### phone_login
 
 Logs a user in with phone/token.
 

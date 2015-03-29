@@ -7,7 +7,7 @@
 
 		return {
 
-###### before_all
+#### before_all
 
 Put things in here if you want them to happen before any other middleware.
 
@@ -17,7 +17,7 @@ Put things in here if you want them to happen before any other middleware.
 				app.log "req.body: #{JSON.stringify(req.body)}" if Object.keys(req.body).length > 0
 				next()
 
-###### api
+#### api
 
 Validates `api/` endpoints.
 
@@ -26,7 +26,7 @@ Validates `api/` endpoints.
 					next()
 				else res.json { error: 'Unauthorized' }, 401
 
-###### set_config
+#### set_config
 
 Sets the app's config. See [here](/source/models/Config.litcoffee) to view the config's schema.
 
@@ -57,7 +57,7 @@ Sets the app's config. See [here](/source/models/Config.litcoffee) to view the c
 					app.error "Invalid or Empty Request"
 					res.json { error: "Invalid or Empty Request" }, 500
 
-###### configure_app_email
+#### configure_app_email
 
 Configures app's email address.
 
@@ -82,7 +82,7 @@ Configures app's email address.
 					app.error "Invalid or Empty Email Credentials"
 					res.json { error: "Invalid or Empty Email Credentials" }, 500
 
-###### configure_app_sms
+#### configure_app_sms
 
 Configures app's SMS text-message functionality
 
