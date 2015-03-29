@@ -25,7 +25,7 @@ Config Model
 			app_url: {
 				type: 'string'
 				required: false
-				defaultsTo: 'http://localhost:1234'
+				defaultsTo: 'http://localhost:9009'
 			}
 
 			app_email: {

@@ -15,7 +15,11 @@ Put things in here if you want them to happen before any other middleware.
 				app.log "#{req.method} #{req.originalUrl}"
 				app.log "req.params: #{req.params}" if Object.keys(req.params).length > 0
 				app.log "req.body: #{JSON.stringify(req.body)}" if Object.keys(req.body).length > 0
-				next()
+				if app.isSetup()
+					next()
+				else
+					app.log req.originalUrl
+					#res.redirect '/setup'
 
 #### api
 
@@ -24,7 +28,8 @@ Validates `api/` endpoints.
 			api: (req, res, next) ->
 				if req.session.api_token?
 					next()
-				else res.json { error: 'Unauthorized' }, 401
+				else 
+					res.json { error: 'Unauthorized' }, 401
 
 #### set_config
 

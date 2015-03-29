@@ -7,18 +7,16 @@ HTTP Get
 
 			'/': [
 				(req, res) ->
-					if app.isSetup()
-						res.render 'index', { 
-							title : 'Écrit'
-							description: app.__ 'Publishing for cool people'
-						}
-					else res.redirect '/setup'
+					res.render app.config.app_name, { 
+						title : 'Écrit'
+						description: app.__ 'Publishing for cool people'
+					}
 			]
 
 			'/login': [
 				(req, res) ->
 					res.render 'login', { 
-						title : 'Écrit'
+						title : app.config.app_name
 						description: app.__ 'Login'
 						require: ['login']
 					}
@@ -26,6 +24,7 @@ HTTP Get
 
 			'/setup': [
 				(req, res) ->
+					console.log "test"
 					res.render 'setup', { 
 						title : 'Écrit'
 						description: app.__ 'Setup'
@@ -53,42 +52,52 @@ HTTP Get
 					}
 			]
 
-			'/:model': [
+			'/:type': [
 				(req, res) ->
-					if req.params.model.match /(admin|wp-admin|signin|login|home)/
+					if req.params.type.match /(admin|wp-admin|home)/
 						res.redirect '/dashboard'
 					else
-						query = { id: req.params.id }
+						query = { type: req.params.type }
 
-						app.models[req.params.model].findOne query, (err, model) ->
-							res.redirect '/404' if err
-							res.render req.params.model, model
+						app.models.resource.find query, (err, results) ->
+							if err
+								res.redirect '/404' 
+							else
+								res.render req.params.type, {
+									title: app.config.app_name
+									data: results
+								}
 			]
 
-			'/:model/:id': [
+			'/:type/:id': [
 				(req, res) ->
-					query = { id: req.params.id }
+					query = { type: req.params.type, id: req.params.id }
 
-					app.models[req.params.model].findOne query, (err, model) ->
-						res.redirect '/404' if err
-						res.render req.params.model, model
+					app.models.resource.findOne query, (err, result) ->
+						if err
+							res.redirect '/404' 
+						else 
+							res.render req.params.type, result
 			]
 
-			'/api/:model': [
+			'/api/:type': [
 				(req, res) ->
-
-					app.models[req.params.model].find().exec (err, models) ->
-						return res.json { err: err }, 500 if err
-						res.json models
+					app.models.resource.find({ type: req.params.type }).exec (err, results) ->
+						if err
+							res.json { err: err }, 500 
+						else 
+							res.json results
 			]
 
-			'/api/:model/:id': [
+			'/api/:type/:id': [
 				(req, res) ->
-					query = { id: req.params.id }
+					query = { type: req.params.type, id: req.params.id }
 
-					app.models[req.params.model].findOne query, (err, model) ->
-						return res.json { err: err }, 500 if err
-						res.json model
+					app.models.resource.findOne query, (err, result) ->
+						if err 
+							res.json { err: err }, 500
+						else
+							res.json result
 			]
 
 		}

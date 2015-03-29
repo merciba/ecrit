@@ -49,6 +49,7 @@
 			server = spawn "node", [startupScript]
 			if environment is 'development'
 				server.stdout.pipe(process.stdout) 
+				server.stderr.pipe(process.stderr)
 			if environment is 'production'
 				log = fs.createWriteStream(path.join(process.cwd(), 'ecrit.log'))
 				server.stdout.pipe(es.replace(/\x1B\[[0-9]*\w/g, '')).pipe(log)

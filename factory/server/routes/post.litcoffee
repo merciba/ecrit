@@ -3,6 +3,15 @@ HTTP Post
 
 	module.exports = (app) ->
 
+		create_resource = (req, res) ->
+			query = { type: req.params.type, id: req.body.id, data: req.body.data, permissions: req.body.permissions }
+
+			app.models.resource.create query, (err, result) ->
+				if err
+					res.json { error: err }, 500 
+				else
+					res.json result
+
 		return {
 
 			'/setup': [
@@ -20,19 +29,6 @@ HTTP Post
 						res.json { error: "Error during Setup." }, 500
 			]
 
-			'/api/:model': [
-			
-				(req, res, next) ->
-					query = {}
-					for key, value of app.models[req.params.model].attributes 
-						query[key] = req.body[key] if req.body.hasOwnProperty key
-
-					app.models[req.params.model].create query, (err, model) ->
-						if err
-							res.json { error: err }, 500 
-						else
-							res.json model
-			
-			]
+			'/api/:type': [ create_resource ]
 
 		}
