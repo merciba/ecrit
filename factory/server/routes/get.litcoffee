@@ -29,6 +29,7 @@ HTTP Get
 					res.render 'setup', { 
 						title : 'Écrit'
 						description: app.__ 'Setup'
+						app_name: app.data_config.app_id
 						require: ['setup']
 					}
 			]

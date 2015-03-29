@@ -2,9 +2,10 @@ Config
 ======
 
 	pkg = require '../package.json'
+	randomToken = require 'random-token'
 
 	module.exports = {
-		sessionSecret : Date()
+		sessionSecret: randomToken 16
 
 		app_id: pkg.name
 

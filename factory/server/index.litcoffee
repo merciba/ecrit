@@ -57,7 +57,7 @@ Instantiate the global `app` object. `app` will contain the main [Express](http:
 Re-route console methods to app, so that we can control language translation and put a timestamp on output
 
 			app.dialog = (str) -> console.log "[#{data_config.app_id}]".magenta, str.green
-			app.log = (str) -> console.log "[#{data_config.app_id}]".magenta, str.cyan
+			app.log = (str) -> console.log "[#{data_config.app_id}]".magenta, "[Info]".cyan, str.cyan
 			app.error = (str) -> throw new Error str.red
 			app.warn = (str) -> console.warn "[#{data_config.app_id}]".magenta, "[Warning]".yellow, str.yellow
 
