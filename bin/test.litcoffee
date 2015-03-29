@@ -25,7 +25,7 @@
 		jsonfile.writeFileSync path.join(__dirname, '../test/config.json'), testOptions
 
 		testTarget = path.join(__dirname, '../test/**/*litcoffee')
-		test = spawn("mocha", ["--compilers", "coffee:coffee-script/register", testTarget])
+		test = spawn("./node_modules/mocha/bin/mocha", ["--compilers", "coffee:coffee-script/register", testTarget])
 		test.stdout.pipe(process.stdout)
 		test.stderr.pipe(process.stderr)
 		test.on 'close', (code) ->

@@ -4,7 +4,7 @@
   "description": "An extremely-opinionated Node app framework.",
   "main": "./bin/ecrit.js",
   "scripts": {
-    "test": "mocha --compilers coffee:coffee-script/register test/*.litcoffee"
+    "test": "./node_modules/mocha/bin/mocha --compilers coffee:coffee-script/register test/**/*litcoffee"
   },
   "bin": "./bin/ecrit.js",
   "repository": {
@@ -34,6 +34,7 @@
     "rimraf": "^2.3.2"
   },
   "devDependencies": {
-    "chai": "^2.2.0"
+    "chai": "^2.2.0",
+    "mocha": "^2.2.1"
   }
 }

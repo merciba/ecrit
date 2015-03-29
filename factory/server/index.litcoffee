@@ -158,6 +158,27 @@ Start the server.
 
 				server = require('http').createServer app
 				server.listen app.get("port"), () ->
+					console.log " ==================================================================\n
+								|\t\t\t\t  n  \t\t\t\t  |\n
+								|\t\t\t\t.|||.\t\t\t\t  |\n
+								|\t\t\t\t| | |\t\t\t\t  |\n
+								|\t\t\t\t| | |\t\t\t\t  |\n
+								|\t\t\t\t| | |\t\t\t\t  |\n
+								|\t\t\t\t| O |   Un cadre                  |\n
+								|\t\t\t\t|   |   d'application             |\n
+								|\t\t\t\t|___|   trop entêté.              |\n
+								|\t\t\t\t(   )\t\t\t\t  |\n
+								|\tÉcrit\t\t\t|   |\t\t\t\t  |\n
+								|\t------------------------|   |\t\t\t\t  |\n
+								|\t   ---------------------|   |   An extremely              |\n
+								|\t      ------------------|   |   opinionated               |\n
+								|\t\t ---------------|   |   app framework.            |\n
+								|\t\t    ------------'.-.'\t\t\t\t  |\n
+								|\t\t       --------- ) ( \t\t\t\t  |\n
+								|\t\t\t  ------(   )\t\t\t\t  |\n
+								|\t\t\t     --- \\|/ \t\t\t\t  |\n
+								|\t\t\t\t  '  \t\t\t\t  |\n
+								==================================================================".magenta
 					console.log "[#{app.data_config.app_id}]".magenta, "v#{pkg.version.cyan} #{app.__('on')} #{ip.address().blue}:#{app.get('port').toString().red}"
 
 		@

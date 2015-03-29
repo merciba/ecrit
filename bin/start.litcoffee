@@ -2,6 +2,7 @@
 ===
 
 	fs = require 'fs-sync'
+	es = require 'event-stream'
 	path = require 'path'
 	exec = require('child_process').exec
 	spawn = require('child_process').spawn
@@ -9,27 +10,6 @@
 	environment = 'development'
 	colors = require 'colors'
 	rimraf = require 'rimraf'
-	badge = " ==================================================================\n
-			|\t\t\t\t  n  \t\t\t\t  |\n
-			|\t\t\t\t.|||.\t\t\t\t  |\n
-			|\t\t\t\t| | |\t\t\t\t  |\n
-			|\t\t\t\t| | |\t\t\t\t  |\n
-			|\t\t\t\t| | |\t\t\t\t  |\n
-			|\t\t\t\t| O |   Un cadre                  |\n
-			|\t\t\t\t|   |   d'application             |\n
-			|\t\t\t\t|___|   trop entêté.              |\n
-			|\t\t\t\t(   )\t\t\t\t  |\n
-			|\tÉcrit\t\t\t|   |\t\t\t\t  |\n
-			|\t------------------------|   |\t\t\t\t  |\n
-			|\t   ---------------------|   |   An extremely              |\n
-			|\t      ------------------|   |   opinionated               |\n
-			|\t\t ---------------|   |   app framework.            |\n
-			|\t\t    ------------'.-.'\t\t\t\t  |\n
-			|\t\t       --------- ) ( \t\t\t\t  |\n
-			|\t\t\t  ------(   )\t\t\t\t  |\n
-			|\t\t\t     --- \\|/ \t\t\t\t  |\n
-			|\t\t\t\t  '  \t\t\t\t  |\n
-			==================================================================".magenta
 
 	module.exports = (end) ->
 
@@ -47,15 +27,31 @@
 			install.stdout.pipe(process.stdout)
 			install.stderr.pipe(process.stderr)
 			install.on 'close', (code) ->
+
 				if code is 0 and fs.exists startupScript
-					console.log badge
 					require startupScript
+					fs = require 'fs'
+					server = spawn "node", [startupScript]
+					if environment is 'development'
+						server.stdout.pipe(process.stdout) 
+					if environment is 'production'
+						log = fs.createWriteStream(path.join(process.cwd(), 'ecrit.log'))
+						server.stdout.pipe(es.replace(/\x1B\[[0-9]*\w/g, '')).pipe(log)
+						server.stderr.pipe(es.replace(/\x1B\[[0-9]*\w/g, '')).pipe(log)
+
 				else if fs.exists startupScript
 					console.log "System dependencies or permissions have likely caused an interruption in `npm install`.\nNow deleting node_modules/...\n"
 					rimraf node_modules, () ->
 						end "Run `ecrit start` again after dependencies have been installed to continue."
 
 		else if fs.exists startupScript
-			console.log badge
-			require startupScript
+			fs = require 'fs'
+			server = spawn "node", [startupScript]
+			if environment is 'development'
+				server.stdout.pipe(process.stdout) 
+			if environment is 'production'
+				log = fs.createWriteStream(path.join(process.cwd(), 'ecrit.log'))
+				server.stdout.pipe(es.replace(/\x1B\[[0-9]*\w/g, '')).pipe(log)
+				server.stderr.pipe(es.replace(/\x1B\[[0-9]*\w/g, '')).pipe(log)
+
 		else end "No Écrit project detected in this folder.".red 
