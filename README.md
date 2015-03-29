@@ -46,7 +46,7 @@ If `[folder]` doesn't exist within the current working directory, it will be cre
 
 Starts an Écrit app. Must be within `[folder]`, cannot be invoked from subdirectories or parent(s). 
 
-#### [`ecrit test [--folder]`](https://github.com/merciba/ecrit/blob/master/bin/test.litcoffee)
+#### [`ecrit test [--option]`](https://github.com/merciba/ecrit/blob/master/bin/test.litcoffee)
 
 Runs unit tests for the framework. Currently only `--console` option is supported.
 
