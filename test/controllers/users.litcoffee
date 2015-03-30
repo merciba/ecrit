@@ -39,17 +39,20 @@ Begin tests.
 		it 'create_new_user', (done) ->
 
 __Scenario:__ `req.body.user` matches [User model](https://github.com/merciba/ecrit/blob/master/factory/server/models/User.litcoffee)  
-__Should:__ Display the time, method and original URL if `ecrit test` is invoked with the `--console` flag.
+__Should:__ Call `app.models.users.create` with identical query.
 			
 			scenario_one = () ->
 
 				req.body.user = {
 					id: 'id'
+					first_name: 'Test'
 				}
 				app.models.users = {
 					create: (query, next) ->
-						query.should.have.property 'id'
+						query.id.should.equal 'id'
+						query.first_name.should.equal 'Test'
 						next null, query
+						
 					attributes: require('../../factory/server/models/User').attributes
 				}
 
