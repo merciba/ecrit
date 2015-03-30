@@ -4,7 +4,7 @@
 
 [![NPM](https://nodei.co/npm/ecrit.png)](https://nodei.co/npm/ecrit/)  
 
-[![Travis CI Build Status](https://travis-ci.org/merciba/ecrit.svg?branch=master)](https://travis-ci.org/merciba/ecrit) [![NPM Downloads](https://img.shields.io/npm/dm/ecrit.svg)](https://www.npmjs.com/package/ecrit) [![Dependency Status](https://david-dm.org/merciba/ecrit.svg)](https://david-dm.org/merciba/ecrit) [![License](https://img.shields.io/npm/l/ecrit.svg)](https://github.com/merciba/ecrit/blob/master/LICENSE) [![Gratipay](http://img.shields.io/gratipay/merciba.svg)](https://gratipay.com/merciba/)
+[![Travis CI Build Status](https://travis-ci.org/merciba/ecrit.svg?branch=master)](https://travis-ci.org/merciba/ecrit) [![NPM Downloads](https://img.shields.io/npm/dm/ecrit.svg)](https://www.npmjs.com/package/ecrit) [![Dependency Status](https://img.shields.io/david/merciba/ecrit.svg)](https://david-dm.org/merciba/ecrit) [![License](https://img.shields.io/npm/l/ecrit.svg)](https://github.com/merciba/ecrit/blob/master/LICENSE) [![Gratipay](http://img.shields.io/gratipay/merciba.svg)](https://gratipay.com/merciba/)
 
 An extremely-opinionated Node app framework. Écrit is highly oriented toward readability, accessibility and logical, intuitive code organization. MongoDB is the database of choice here.  
 Use this framework as a more versatile alternative to Ghost or Wordpress, or if you've used a similar framework like Sails but prefer Literate CoffeeScript as much as we do.
