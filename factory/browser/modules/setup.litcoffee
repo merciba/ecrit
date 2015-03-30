@@ -4,7 +4,7 @@
 	templates = require '../templates/setup'
 	window.App = {} if not window.App?
 
-	$.fn.serializeJSON = () ->
+	$.fn.serializeJSON = () -> 
 		o = {}
 		$.each @serializeArray(), () ->
 			o[@name] = @value

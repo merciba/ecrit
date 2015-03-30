@@ -38,7 +38,7 @@ Begin tests.
 		
 		it 'create_new_user', (done) ->
 
-__Scenario:__ `req.body.user` matches [User model](https://github.com/merciba/ecrit/blob/master/factory/server/models/User.litcoffee)  
+__Scenario One:__ `req.body.user` matches [User model](https://github.com/merciba/ecrit/blob/master/factory/server/models/User.litcoffee).  
 __Should:__ Call `app.models.users.create` with identical query.
 			
 			scenario_one = () ->
@@ -52,10 +52,44 @@ __Should:__ Call `app.models.users.create` with identical query.
 						query.id.should.equal 'id'
 						query.first_name.should.equal 'Test'
 						next null, query
+
+					attributes: require('../../factory/server/models/User').attributes
+				}
+
+				controller.create_new_user req, res, scenario_two
+
+__Scenario Two:__ `req.body.user` doesn't match [User model](https://github.com/merciba/ecrit/blob/master/factory/server/models/User.litcoffee).  
+__Should:__ Call `app.models.users.create` with modified query.
+			
+			scenario_two = () ->
+				req.user.should.exist
+				req.body.user = {
+					id: 'id'
+					first_name: 'Test'
+					not_in_schema: 'I am not in the user schema'
+				}
+				app.models.users = {
+					create: (query, next) ->
+						query.id.should.equal 'id'
+						query.should.not.have.property 'not_in_schema'
+						query.first_name.should.equal 'Test'
+						next null, query
 						
 					attributes: require('../../factory/server/models/User').attributes
 				}
 
 				controller.create_new_user req, res, done
+
+			scenario_one()
+
+#### [validate_new_user](https://github.com/merciba/ecrit/blob/master/factory/server/controllers/users.litcoffee#create_new_user)
+		
+		it 'validate_new_user', (done) ->
+
+__Scenario One:__   
+__Should:__ 
+			
+			scenario_one = () ->
+				done()
 
 			scenario_one()

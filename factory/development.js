@@ -10,7 +10,7 @@ gulp.task('build', function() {
 
 gulp.task('dev', function() {
 	
-	nodemon({ script: 'production.js', ext: 'html litcoffee jade', ignore: ['server/data', 'browser']})
+	nodemon({ script: 'index.js', ext: 'html litcoffee jade', ignore: ['server/data', 'browser']})
     .on('restart', function () {})
 
     gulp.watch('./browser/**/*.litcoffee', ['build'])
