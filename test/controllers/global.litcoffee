@@ -50,12 +50,29 @@ __Should:__ Display the time, method and original URL if `ecrit test` is invoked
 
 			scenario_one()
 
+#### [configured](https://github.com/merciba/ecrit/blob/master/factory/server/controllers/global.litcoffee#configured)
+		
+		it 'configured', (done) ->
+
+__Scenario One:__ `app.isSetup()` returns `false`  
+__Should:__ Redirect to `'/users'`
+			
+			scenario_one = () ->
+
+				app.isSetup = () -> return false
+				res.redirect = (path) ->
+					path.should.equal '/setup'
+					done()
+
+				controller.configured req, res, done
+
+			scenario_one()
 
 #### [api](https://github.com/merciba/ecrit/blob/master/factory/server/controllers/global.litcoffee#api)
 
 		it 'api', (done) ->
 
-__Scenario:__ req.session.api_token exists  
+__Scenario One:__ req.session.api_token exists  
 __Should:__ Callback
 
 			scenario_one = () ->
@@ -66,7 +83,7 @@ __Should:__ Callback
 
 				controller.api req, res, scenario_two
 
-__Scenario:__ req.session.api_token does not exist.  
+__Scenario Two:__ req.session.api_token does not exist.  
 __Should:__ Call `res.json` with `{ error: "Unauthorized" }`  
 
 			scenario_two = () ->
@@ -87,7 +104,7 @@ __Should:__ Call `res.json` with `{ error: "Unauthorized" }`
 
 		it 'set_config', (done) ->
 
-__Scenario:__ `app.isSetup()` returns `true`  
+__Scenario One:__ `app.isSetup()` returns `true`  
 __Should:__ Update `app.config` with `replace_me: 'replacement'`
 
 			scenario_one = () ->
@@ -109,7 +126,7 @@ __Should:__ Update `app.config` with `replace_me: 'replacement'`
 
 				controller.set_config req, res, next
 
-__Scenario:__ `app.isSetup()` returns `false`  
+__Scenario Two:__ `app.isSetup()` returns `false`  
 __Should:__ Update `app.config` with `replace_me: 'replacement'`
 
 			scenario_two = () ->
@@ -129,26 +146,3 @@ __Should:__ Update `app.config` with `replace_me: 'replacement'`
 				controller.set_config req, res, next
 
 			scenario_one()
-
-#### [configure_app_email](https://github.com/merciba/ecrit/blob/master/factory/server/controllers/global.litcoffee#configure_app_email)<sup>[*](#note)</sup>
-
-		it 'configure_app_email', (done) ->
-
-__Scenario:__ `app.isSetup()` returns `true` and `app.config.app_auth_type` is `'email'`
-__Should:__ Create `app.postman`, an instance of [Nodemailer](http://adilapapaya.com/docs/nodemailer/).
-
-			scenario_one = () ->
-
-				app.postman = {}
-
-				next = () ->
-					app.postman.should.be.empty
-
-				controller.set_config req, res, next
-
-				done()
-
-			scenario_one()
-
-#### Note
-<sup>*</sup>This particular test is more of a filler test for consistency's sake, it doesn't really do anything useful.

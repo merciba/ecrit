@@ -86,7 +86,7 @@ Configures app's email address.
 						app.error "Invalid or Empty Email Credentials"
 						res.json { error: "Invalid or Empty Email Credentials" }, 500
 
-				else if (app.isSetup() and app.config.app_auth_type is 'phone') or (not app.isSetup() and req.body.app_auth_type is 'phone')
+				else if (app.isSetup() and app.config.app_auth_type is 'phone') or (not app.isSetup() and req.body.config.app_auth_type is 'phone')
 					app.info "Email does not need to be configured."
 					next()
 				else 
