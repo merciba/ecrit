@@ -1,36 +1,34 @@
-Index Model
-==========
+Module Model
+============
+
+	fs = require 'fs'
+	path = require 'path'
 
 	module.exports = {
 
-		identity: 'resource'
+		identity: 'modules'
 		connection: 'mongo'
 
 		attributes: {
 
-			type: {
+			name: {
 				type: 'string'
 				required: true
 			}
 
-			id: {
+			script: {
 				type: 'string'
-				required: true
-				unique: true
-			}
-
-			data: {
-				type: 'json'
 				required: true
 			}
 
-			permissions: {
+			templates: {
 				type: 'string'
-				default: 'all'
-			} 
+				required: true
+			}
 
 			toJSON: () ->
 				return @toObject()
+
 		}
 			
 	}
