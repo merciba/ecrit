@@ -16,7 +16,6 @@ Starts an Écrit app from within its' working directory.
 	module.exports = (end) ->
 
 		environment = 'development'
-		console.log environment
 
 Check to see if there's really an Écrit project here.
 
@@ -33,7 +32,6 @@ Detect/assign environment and script paths
 			environment = process.argv[3]
 		else console.warn "[Écrit]".magenta, "[Warning] No environment specified, assuming `development` by default".yellow
 
-		console.log environment
 		startupScript = path.join process.cwd(), "#{environment}.js"
 		node_modules = path.join process.cwd(), "node_modules"
 
