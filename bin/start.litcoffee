@@ -10,11 +10,13 @@ Starts an Écrit app from within its' working directory.
 	exec = require('child_process').exec
 	spawn = require('child_process').spawn
 	pkg = require(path.join(__dirname, '../package.json'))
-	environment = 'development'
 	colors = require 'colors'
 	rimraf = require 'rimraf'
 
 	module.exports = (end) ->
+
+		environment = 'development'
+		console.log environment
 
 Check to see if there's really an Écrit project here.
 
@@ -25,16 +27,17 @@ Check to see if there's really an Écrit project here.
 
 Detect/assign environment and script paths
 
-		if process.env.NODE_ENV
+		if process.env.NODE_ENV?
 			environment = process.env.NODE_ENV
-		else if process.argv[3]? and process.argv[3] is 'development' or 'production'
+		else if process.argv[3]? and process.argv[3] is ('development' or 'production')
 			environment = process.argv[3]
 		else console.warn "[Écrit]".magenta, "[Warning] No environment specified, assuming `development` by default".yellow
 
+		console.log environment
 		startupScript = path.join process.cwd(), "#{environment}.js"
 		node_modules = path.join process.cwd(), "node_modules"
 
-Start the app. This function will be invoked later, in line 83.
+Start the app. This function will be invoked later.
 
 		start = () ->
 
@@ -99,4 +102,6 @@ Run `npm install` if this is a brand new app.
 			else 
 				start()
 
-		else end "No Écrit project detected in this folder.".red 
+		else 
+			console.log startupScript
+			end "No Écrit project detected in this folder.".red 
