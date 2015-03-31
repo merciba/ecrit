@@ -36,16 +36,37 @@ cd exampleApp && ecrit start
 Commands
 --------
 
-#### [`ecrit create [folder]`](https://github.com/merciba/ecrit/blob/master/bin/create.litcoffee)
+#### [`ecrit create <app name>`](https://github.com/merciba/ecrit/blob/master/bin/create.litcoffee)
 
-Creates an app at `[folder]` where `[folder]` is a relative path to an existing empty directory.  
-If `[folder]` doesn't exist within the current working directory, it will be created.
+Creates an app at folder `<app name>` within the current working directory.  
+If the folder doesn't exist, it will be created.  
+If the folder exists and is empty, Écrit will copy a new app to the directory.  
+If the folder exists and is not empty, Écrit will return an error.  
 
-#### [`ecrit start`](https://github.com/merciba/ecrit/blob/master/bin/start.litcoffee)
+#### [`ecrit start <environment>`](https://github.com/merciba/ecrit/blob/master/bin/start.litcoffee)
 
-Starts an Écrit app. Must be within `[folder]`, cannot be invoked from subdirectories or parent(s). 
+Starts an Écrit app. Must be within `<app name>`, cannot be invoked from subdirectories or parent(s).  
+If no `<environment>` provided, defaults to 'development'.  
 
-#### [`ecrit test [--option]`](https://github.com/merciba/ecrit/blob/master/bin/test.litcoffee)
+If called with `--production`, Écrit automatically launches your app in the background and load-balances it between all CPU threads for production use.  
+Under the hood, we're leveraging [PM2](https://github.com/Unitech/pm2), an ideal choice because of its' reputation and compatibility with [Keymetrics](https://keymetrics.io/) app monitoring suite. 
+
+#### [`ecrit show <app name>`](https://github.com/merciba/ecrit/blob/master/bin/show.litcoffee)
+
+Shows info about an Écrit app with the given `<app name>`.  
+If no `<app name>`, assumes current directory.  
+
+#### [`ecrit restart <app name>`](https://github.com/merciba/ecrit/blob/master/bin/restart.litcoffee)
+
+Restarts an Écrit app with the given `<app name>`.  
+If no `<app name>`, assumes current directory.  
+
+#### [`ecrit stop <app name>`](https://github.com/merciba/ecrit/blob/master/bin/stop.litcoffee)
+
+Stops an Écrit app with the given `<app name>`.  
+If no `<app name>`, assumes current directory.  
+
+#### [`ecrit test --_option_`](https://github.com/merciba/ecrit/blob/master/bin/test.litcoffee)
 
 Runs unit tests for the framework. Currently only `--console` option is supported.
 

@@ -4,15 +4,15 @@ var gulp = require('gulp'),
 	colors = require('colors');
 
 gulp.task('build', function() {
-	gulp.src('./browser/**/*.litcoffee')
+	gulp.src('browser/**/*.litcoffee')
 		.pipe(coffee({literate: true})).on('error', console.error)
-		.pipe(gulp.dest('./server/public/scripts/')).on('end', function() {
+		.pipe(gulp.dest('server/public/scripts/')).on('end', function() {
 			console.log("[Écrit] Done rebuilding /js/build.".green)
 		})
 })
 
 gulp.task('prod', function() {
-    gulp.watch('./browser/**/*.litcoffee', ['build']).on('change', function(event) {
+    gulp.watch('browser/**/*.litcoffee', ['build']).on('change', function(event) {
     	console.log('[Écrit] [Info] '.cyan + event.path.cyan + ' was '.cyan + event.type.cyan + '. Rebuilding /js/build...'.cyan)
     })
     require('./index.js')

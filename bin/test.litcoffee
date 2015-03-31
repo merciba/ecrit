@@ -1,5 +1,4 @@
-`test` command handler
-===
+## `test` command handler
 
 	fs = require 'fs'
 	fs_sync = require 'fs-sync'
@@ -16,12 +15,6 @@
 
 	module.exports = (end) ->
 
-		if not fs_sync.exists path.join(__dirname, '../factory/node_modules')
-			factory = path.join(__dirname, '../factory')
-			console.log "Installing NPM Modules for /factory..."
-			exec("cd #{factory} && npm install")
-			console.log "Successfully installed NPM Modules in /factory/node_modules".green
-
 		for el, i in process.argv
 			testOptions[process.argv[i].replace('--', '')] = true if i > 2 and testOptions.hasOwnProperty process.argv[i].replace('--', '')
 		
@@ -34,6 +27,8 @@
 			if fs.lstatSync(folderPath).isDirectory()
 				mocha.addFile path.join(folderPath, file) for file in fs.readdirSync folderPath
 
+Run Mocha tests.
+
 		mocha.run (failures) ->
-		  process.on 'exit', () ->
-		    process.exit failures
+			process.on 'exit', () ->
+				process.exit failures

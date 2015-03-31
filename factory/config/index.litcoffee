@@ -9,7 +9,7 @@ Config
 
 		app_id: pkg.name
 
-		app_url: 'http://localhost:9009'
+		app_url: 'http://ÉNV:app_host'
 
 		data: {
 
@@ -21,10 +21,10 @@ Config
 			connections: {
 				mongo: {
 					adapter: 'mongo'
-					host: 'localhost',
+					host: "ÉNV:mongo_host",
 					port: 27017,
-					user: '',
-					password: '',
+					user: "ÉNV:mongo_user",
+					password: "ÉNV:mongo_password",
 					database: pkg.name
 				}
 			}

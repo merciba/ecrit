@@ -3,9 +3,9 @@ var gulp = require('gulp'),
 	coffee = require('gulp-coffee');
 
 gulp.task('build', function() {
-	gulp.src('./browser/**/*.litcoffee')
+	gulp.src('browser/**/*.litcoffee')
 		.pipe(coffee({literate: true})).on('error', console.error)
-		.pipe(gulp.dest('./server/public/scripts/'))
+		.pipe(gulp.dest('server/public/scripts/'))
 })
 
 gulp.task('dev', function() {
@@ -13,7 +13,7 @@ gulp.task('dev', function() {
 	nodemon({ script: 'index.js', ext: 'html litcoffee jade', ignore: ['server/data', 'browser']})
     .on('restart', function () {})
 
-    gulp.watch('./browser/**/*.litcoffee', ['build'])
+    gulp.watch('browser/**/*.litcoffee', ['build'])
 
 })
 

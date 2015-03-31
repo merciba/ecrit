@@ -4,9 +4,10 @@ require('coffee-script').register()
 fs = require('fs-sync')
 path = require('path')
 pkg = require(path.join(__dirname, '../package.json'))
+colors = require('colors')
 
 done = function (exitmsg) {
-	if (exitmsg) console.log(exitmsg)
+	if (exitmsg) console.log("[Écrit]".magenta, exitmsg)
 	process.exit(0)
 }
 
