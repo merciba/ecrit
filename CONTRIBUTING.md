@@ -13,4 +13,35 @@ Literate Coffescript files use the file extension `.litcoffee`, and can be rende
 
 #### Loaders Loaders Loaders
 
+Écrit's source code uses a 'loader' pattern, where components are broken out into discrete functions which are loaded dynamically by an expression. As an example, the model/route/controller loaders used in [`factory/server/index.litcoffee`](/factory/server/index.litcoffee) look like this: 
+
+```CoffeeScript
+	models[model.replace('.litcoffee', '')] = require("./models/#{model.replace('.litcoffee', '')}") for model in fs.readdirSync(path.join(__dirname, "models"))
+	routes[route.replace('.litcoffee', '')] = require("./routes/#{route.replace('.litcoffee', '')}") for route in fs.readdirSync(path.join(__dirname, "routes"))
+	controllers[controller.replace('.litcoffee', '')] = require("./controllers/#{controller.replace('.litcoffee', '')}") for controller in fs.readdirSync(path.join(__dirname, "controllers"))
+```
+
+What's happening here? Well, note the syntax, which can be boiled down to this: 
+
+```CoffeeScript
+	object[filename] = require("path/to/folder/#{filename}") for filename in directory 
+```
+
+We're dynamically using Node's `require()` function to load the `module.exports` of each file within a folder, and assign it to a matching named property of an object. This means, we no longer have to worry about how to access stuff between files - put a statement like this in there, and you can add files at will and access them this way, logically grouped into one object. This is a very useful and helpful concept, made possible by Coffeescript's expressive capability. Use it!
+
+#### Indentation
+
+Watch your whitespace. We do tab indents here, 4 spaces wide is my prefence but that's between you and your IDE. Functions are declared like so: 
+
+```CoffeeScript
+	foo = () ->
+		console.log "I'm inside function foo()"
+
+		bar = () ->
+			console.log "I'm inside function bar(), called from within function foo()"
+
+		bar()
+
+	foo() # should see both console.log statements on console 
+```
 
