@@ -36,14 +36,14 @@ cd exampleApp && ecrit start
 Commands
 --------
 
-#### [`ecrit create <app name>`](https://github.com/merciba/ecrit/blob/master/bin/create.litcoffee)
+#### [`ecrit create <app name>`](/bin/create.litcoffee)
 
 Creates an app at folder `<app name>` within the current working directory.  
 If the folder doesn't exist, it will be created.  
 If the folder exists and is empty, Écrit will copy a new app to the directory.  
 If the folder exists and is not empty, Écrit will return an error.  
 
-#### [`ecrit start <environment>`](https://github.com/merciba/ecrit/blob/master/bin/start.litcoffee)
+#### [`ecrit start <environment>`](/bin/start.litcoffee)
 
 Starts an Écrit app. Must be within `<app name>`, cannot be invoked from subdirectories or parent(s).  
 If no `<environment>` provided, defaults to 'development'.  
