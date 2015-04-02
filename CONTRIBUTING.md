@@ -54,55 +54,91 @@ An Écrit app has the following structure:
 	|
 	|- browser/
 	|	|
-	|	|- modules/
+	|	|- modules/												# Contains front-end scripts, organized into 'modules' with matching templates
 	|	|	|
-	|	|	|- setup.litcoffee
+	|	|	|- setup.litcoffee 									# 'setup' module is prepackaged because you can't have an app unless you configure it
 	|	|	|- [module].litcoffee
 	|	|
-	|	|- templates/
+	|	|- templates/											# Contains front-end templates, with matching scripts in the 'modules' folder
 	|		|
-	|		|- setup.litcoffee
+	|		|- setup.litcoffee 									# templates for the 'setup' module
 	|		|- [module].litcoffee
 	|
 	|	Client Side ("Front End")
 ----+---------------------------------------------------------
 	|	Server Side ("Back End")
 	|
-	|- config/
+	|- config/													# Contains config files for the app
 	|	|
-	|	|- i18n/
+	|	|- i18n/												# Internationalization stuff goes here. Define app_i18n_locales in the Setup flow and they'll be added here. 
 	|	|	|
 	|	|	|- locales/
 	|	|		|
 	|	|		|-en.json
 	|	|		|-[language].json
 	|	|
-	|	|- passport/
+	|	|- passport/											# Passport strategies go in here
 	|	|	|
 	|	|	|- strategies.litcoffee
 	|	|
-	|	|- index.litcoffee
+	|	|- index.litcoffee 										# General app config, mostly for mongoDB and sessions
 	|
-	|- server/
+	|- server/ 													# Contains all the server/api code
 	|	|
-	|	|- controllers/
+	|	|- controllers/											# Contains all the controllers
 	|	|	|
-	|	|	|- global.litcoffee
-	|	|	|- modules.litcoffee
-	|	|	|- users.litcoffee
+	|	|	|- global.litcoffee 								# Global controller
+	|	|	|- modules.litcoffee 								# Modules controller
+	|	|	|- users.litcoffee 									# Users controller
 	|	|
 	|	|- models/
 	|	|	|
+	|	|	|- Config.litcoffee 								# Config model
+	|	|	|- Module.litcoffee 								# Module model
+	|	|	|- Resource.litcoffee 								# Resource model
+	|	|	|- User.litcoffee 									# User model
 	|	|	
-	|	|- public/
-	|	|- routes/
-	|	|- views/
-	|	|- index.litcoffee
+	|	|- public/ 												# Contains static assets.
+	|	|	|
+	|	|	|- css/
+	|	|	|	|
+	|	|	|	|- style.css 									# Main CSS file.
+	|	|	|
+	|	|	|- img/ 											# Contains images
+	|	|	|- scripts/ 										# Contains built JS from browser/
+	|	|		|
+	|	|		|- modules/
+	|	|		|	|
+	|	|		|	|- setup.js
+	|	|		|	|- [module].js
+	|	|		|
+	|	|		|- templates/
+	|	|			|
+	|	|			|- setup.js
+	|	|			|- [module].js
+	|	|	
+	|	|- routes/ 												# Express routes for HTTP requests
+	|	|	|
+	|	|	|- delete.litcoffee 								# HTTP DELETE handler
+	|	|	|- get.litcoffee 									# HTTP GET handler
+	|	|	|- middleware.litcoffee 							# Express middleware
+	|	|	|- post.litcoffee 									# HTTP POST handler
+	|	|	|- put.litcoffee 									# HTTP PUT handler
+	|	|	
+	|	|- views/ 												# Jade views for server-side resources
+	|	|	|
+	|	|	|- dashboard.jade 									# Dashboard view
+	|	|	|- index.jade 										# Homepage view
+	|	|	|- layout.jade 										# Layout for the other views
+	|	|	|- login.jade 										# Login view
+	|	|	|- setup.jade 										# Setup view
+	|	|	
+	|	|- index.litcoffee 										# Main server script. Everything is setup and invoked from here.
 	|	
-	|- production.js
-	|- development.js
-	|- index.js
-	|- package.json
-	|- .gitignore
+	|- production.js 											# Production build setup
+	|- development.js 											# Development build setup
+	|- index.js 												# Main app entrypoint
+	|- package.json 											# npm config file, has all dependencies
+	|- .gitignore 												# file to specify what Git should ignore
 
 ```
