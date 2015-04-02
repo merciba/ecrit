@@ -86,7 +86,14 @@ An Écrit app has the following structure:
 	|- server/
 	|	|
 	|	|- controllers/
+	|	|	|
+	|	|	|- global.litcoffee
+	|	|	|- modules.litcoffee
+	|	|	|- users.litcoffee
+	|	|
 	|	|- models/
+	|	|	|
+	|	|	
 	|	|- public/
 	|	|- routes/
 	|	|- views/

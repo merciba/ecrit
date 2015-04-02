@@ -1,4 +1,4 @@
-Écrit<sup>[[beta](#todo)]</sup>
+Écrit
 =====
 [IPA](http://en.wiktionary.org/wiki/Appendix:French_pronunciation): /e.kʁi/ - that's "eh-cree"  
 
@@ -48,30 +48,40 @@ If the folder exists and is not empty, Écrit will return an error.
 Starts an Écrit app. Must be within `<app name>`, cannot be invoked from subdirectories or parent(s).  
 If no `<environment>` provided, defaults to 'development'.  
 
-If called with `production`, Écrit automatically launches your app in the background and load-balances it between all CPU threads for production use.  
-Under the hood, we're leveraging [PM2](https://github.com/Unitech/pm2), an ideal choice because of its' reputation and compatibility with [Keymetrics](https://keymetrics.io/) app monitoring suite. 
+If called with `production`, Écrit automatically launches your app as a cluster of processes in the background and load-balances them between all CPU threads for production use.  
 
-#### [`ecrit show <app name>`](https://github.com/merciba/ecrit/blob/master/bin/show.litcoffee)
+#### [`ecrit show <app name>`](/bin/show.litcoffee)
 
-Shows info about an Écrit app with the given `<app name>`.  
+Shows info about an Écrit app cluster with the given `<app name>`.  
 If no `<app name>`, assumes current directory.  
 
-#### [`ecrit restart <app name>`](https://github.com/merciba/ecrit/blob/master/bin/restart.litcoffee)
+#### [`ecrit restart <app name>`](/bin/restart.litcoffee)
 
-Restarts an Écrit app with the given `<app name>`.  
+Restarts an Écrit app cluster (0s downtime!) with the given `<app name>`.  
 If no `<app name>`, assumes current directory.  
 
-#### [`ecrit stop <app name>`](https://github.com/merciba/ecrit/blob/master/bin/stop.litcoffee)
+#### [`ecrit stop <app name>`](/bin/stop.litcoffee)
 
-Stops an Écrit app with the given `<app name>`.  
+Stops an Écrit app cluster with the given `<app name>`.  
 If no `<app name>`, assumes current directory.  
 
-#### [`ecrit test [option]`](https://github.com/merciba/ecrit/blob/master/bin/test.litcoffee)
+#### [`ecrit destroy <app name>`](/bin/destroy.litcoffee)
+
+Destroys an Écrit app cluster with the given `<app name>`.  
+If no `<app name>`, assumes current directory.  
+
+#### [`ecrit test [option]`](/bin/test.litcoffee)
 
 Runs unit tests for the framework. Currently only `--console` option is supported.
+
+Contributing
+------------
+
+See the [Contributing](/CONTRIBUTING.md) guide. There's plenty of room for collaboration!
 
 ###### TODO
 
 * Finish building out tests
 * Design and build out Dashboard features
+* Add remote server management support so users can scale past 1 machine's CPU cores
 

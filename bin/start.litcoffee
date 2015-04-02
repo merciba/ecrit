@@ -28,7 +28,7 @@ Detect/assign environment and script paths
 
 		if process.env.NODE_ENV?
 			environment = process.env.NODE_ENV
-		else if process.argv[3]? and process.argv[3] is ('development' or 'production')
+		else if process.argv[3]?
 			environment = process.argv[3]
 		else console.warn "[Écrit]".magenta, "[Warning] No environment specified, assuming `development` by default".yellow
 
